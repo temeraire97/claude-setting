@@ -10,11 +10,13 @@
         <string>/Users/hyunoo/dotfiles/claude/sync.sh</string>
     </array>
 
-    <key>StartInterval</key>
-    <integer>3600</integer>
-
-    <key>RunAtLoad</key>
-    <true/>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>19</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
 
     <key>StandardOutPath</key>
     <string>/Users/hyunoo/dotfiles/claude/.sync-stdout.log</string>
