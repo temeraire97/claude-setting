@@ -16,52 +16,42 @@ log() {
 # Ensure directories exist
 mkdir -p "$SCRIPT_DIR/skills/design-first" "$SCRIPT_DIR/plugins"
 
-# Files to sync (source -> destination)
-declare -A FILES=(
-    ["$CLAUDE_DIR/CLAUDE.md"]="$SCRIPT_DIR/CLAUDE.md"
-    ["$CLAUDE_DIR/settings.json"]="$SCRIPT_DIR/settings.json"
-    ["$CLAUDE_DIR/plugins/installed_plugins.json"]="$SCRIPT_DIR/plugins/installed_plugins.json"
-)
+sync_file() {
+    local src="$1"
+    local dest="$2"
 
-# Directories to sync
-declare -A DIRS=(
-    ["$CLAUDE_DIR/skills/design-first"]="$SCRIPT_DIR/skills/design-first"
-)
-
-CHANGED=false
-
-# Sync files
-for src in "${!FILES[@]}"; do
-    dest="${FILES[$src]}"
     if [ -f "$src" ]; then
-        # Check if file is a symlink pointing to our dotfiles (skip if so)
+        # Skip if source is a symlink (already managed by dotfiles)
         if [ -L "$src" ]; then
-            continue
+            return 0
         fi
 
         # Compare and copy if different
         if [ ! -f "$dest" ] || ! cmp -s "$src" "$dest"; then
             cp "$src" "$dest"
             log "Updated: $dest"
-            CHANGED=true
+            return 1  # indicates change
         fi
     fi
-done
+    return 0
+}
+
+sync_dir() {
+    local src="$1"
+    local dest="$2"
+
+    if [ -d "$src" ] && [ ! -L "$src" ]; then
+        rsync -a --delete "$src/" "$dest/" 2>/dev/null || true
+    fi
+}
+
+# Sync files
+sync_file "$CLAUDE_DIR/CLAUDE.md" "$SCRIPT_DIR/CLAUDE.md"
+sync_file "$CLAUDE_DIR/settings.json" "$SCRIPT_DIR/settings.json"
+sync_file "$CLAUDE_DIR/plugins/installed_plugins.json" "$SCRIPT_DIR/plugins/installed_plugins.json"
 
 # Sync directories
-for src in "${!DIRS[@]}"; do
-    dest="${DIRS[$src]}"
-    if [ -d "$src" ] && [ ! -L "$src" ]; then
-        # Use rsync for directory sync
-        if rsync -ac --delete "$src/" "$dest/" 2>/dev/null; then
-            # Check if rsync made changes
-            if [ $? -eq 0 ]; then
-                # rsync doesn't tell us if changes were made, so we check git status later
-                :
-            fi
-        fi
-    fi
-done
+sync_dir "$CLAUDE_DIR/skills/design-first" "$SCRIPT_DIR/skills/design-first"
 
 # Git commit if in a git repo and there are changes
 cd "$SCRIPT_DIR"
