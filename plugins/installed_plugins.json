@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "plugins": {
+    "claude-mem@thedotmack": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/thedotmack/claude-mem/9.0.4",
+        "version": "9.0.4",
+        "installedAt": "2025-12-19T01:37:05.216Z",
+        "lastUpdated": "2026-01-12T07:01:43.547Z"
+      }
+    ],
+    "claude-hud@claude-hud": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-hud/claude-hud/0.0.6",
+        "version": "0.0.6",
+        "installedAt": "2026-01-14T09:51:07.269Z",
+        "lastUpdated": "2026-01-14T09:51:07.269Z",
+        "gitCommitSha": "901025c42c0cac967f10167a4ed01c515394bd51"
+      }
+    ]
+  }
+}
