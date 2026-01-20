@@ -1,0 +1,2 @@
+/Users/hyunoo/dotfiles/claude/sync.sh: line 20: /Users/hyunoo/.claude/CLAUDE.md: syntax error: operand expected (error token is "/Users/hyunoo/.claude/CLAUDE.md")
+/Users/hyunoo/dotfiles/claude/sync.sh: line 23: /Users/hyunoo/.claude/skills/design-first: syntax error: operand expected (error token is "/Users/hyunoo/.claude/skills/design-first")
