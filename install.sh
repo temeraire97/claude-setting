@@ -34,12 +34,22 @@ echo "  Done: ~/.claude/settings.json -> $SCRIPT_DIR/settings.json"
 
 # 3. Symlink skills directory
 echo "[3/4] Setting up skills..."
+
+# design-first skill
 if [ -d "$CLAUDE_DIR/skills/design-first" ] && [ ! -L "$CLAUDE_DIR/skills/design-first" ]; then
     echo "  Backing up existing design-first skill"
     mv "$CLAUDE_DIR/skills/design-first" "$CLAUDE_DIR/skills/design-first.backup"
 fi
 ln -sfn "$SCRIPT_DIR/skills/design-first" "$CLAUDE_DIR/skills/design-first"
-echo "  Done: ~/.claude/skills/design-first -> $SCRIPT_DIR/skills/design-first"
+echo "  Done: ~/.claude/skills/design-first"
+
+# backup skill
+if [ -d "$CLAUDE_DIR/skills/backup" ] && [ ! -L "$CLAUDE_DIR/skills/backup" ]; then
+    echo "  Backing up existing backup skill"
+    mv "$CLAUDE_DIR/skills/backup" "$CLAUDE_DIR/skills/backup.bak"
+fi
+ln -sfn "$SCRIPT_DIR/skills/backup" "$CLAUDE_DIR/skills/backup"
+echo "  Done: ~/.claude/skills/backup"
 
 # 4. Install plugins
 echo "[4/4] Installing plugins..."
@@ -67,6 +77,7 @@ echo "Installed:"
 echo "  - CLAUDE.md (global instructions)"
 echo "  - settings.json (plugin settings, statusLine, thinking mode)"
 echo "  - skills/design-first (Scout-Architect-Estimator workflow)"
+echo "  - skills/backup (backup management)"
 echo "  - Plugins: claude-hud, claude-mem"
 echo ""
 echo "Note: Plugin activation status is managed in settings.json"

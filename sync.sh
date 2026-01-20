@@ -14,7 +14,7 @@ log() {
 }
 
 # Ensure directories exist
-mkdir -p "$SCRIPT_DIR/skills/design-first" "$SCRIPT_DIR/plugins"
+mkdir -p "$SCRIPT_DIR/skills/design-first" "$SCRIPT_DIR/skills/backup" "$SCRIPT_DIR/plugins"
 
 sync_file() {
     local src="$1"
@@ -52,6 +52,7 @@ sync_file "$CLAUDE_DIR/plugins/installed_plugins.json" "$SCRIPT_DIR/plugins/inst
 
 # Sync directories
 sync_dir "$CLAUDE_DIR/skills/design-first" "$SCRIPT_DIR/skills/design-first"
+sync_dir "$CLAUDE_DIR/skills/backup" "$SCRIPT_DIR/skills/backup"
 
 # Git commit if in a git repo and there are changes
 cd "$SCRIPT_DIR"
