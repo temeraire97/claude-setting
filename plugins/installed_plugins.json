@@ -10,14 +10,14 @@
         "lastUpdated": "2026-01-12T07:01:43.547Z"
       }
     ],
-    "claude-hud@claude-hud": [
+    "oh-my-claudecode@omc": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-hud/claude-hud/0.0.6",
-        "version": "0.0.6",
-        "installedAt": "2026-01-14T09:51:07.269Z",
-        "lastUpdated": "2026-01-14T09:51:07.269Z",
-        "gitCommitSha": "901025c42c0cac967f10167a4ed01c515394bd51"
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/omc/oh-my-claudecode/3.1.0",
+        "version": "3.1.0",
+        "installedAt": "2026-01-21T03:29:42.183Z",
+        "lastUpdated": "2026-01-21T03:29:42.183Z",
+        "gitCommitSha": "e7c9c6f3a79118e106b8e40778d7e8490b12389e"
       }
     ]
   }
