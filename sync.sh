@@ -30,7 +30,6 @@ sync_file() {
         if [ ! -f "$dest" ] || ! cmp -s "$src" "$dest"; then
             cp "$src" "$dest"
             log "Updated: $dest"
-            return 1  # indicates change
         fi
     fi
     return 0
