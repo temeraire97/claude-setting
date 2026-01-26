@@ -4,7 +4,7 @@
     "command": "node ~/.claude/hud/omc-hud.mjs"
   },
   "enabledPlugins": {
-    "claude-mem@thedotmack": false,
+    "claude-mem@thedotmack": true,
     "oh-my-claudecode@omc": true
   },
   "alwaysThinkingEnabled": true
