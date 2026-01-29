@@ -320,6 +320,17 @@ This is NOT optional. The user will verify changes manually. Running build comma
 
 If you catch yourself about to run a build command, STOP. Ask the user first.
 
+### Package Manager Rules
+
+Check `packageManager` field in `package.json` to determine the project's package manager, then use the appropriate command:
+
+| Package Manager | Run installed package | Run one-off package |
+|-----------------|----------------------|---------------------|
+| pnpm | `pnpm exec` | `pnpm dlx` |
+| npm | `npx` | `npx` |
+| yarn | `yarn` | `yarn dlx` |
+| bun | `bun` | `bunx` |
+
 ### Custom Skills
 
 Git/커밋 작업 시 `~/.claude/skills/my-git/` 규칙을 **반드시** 따를 것.
