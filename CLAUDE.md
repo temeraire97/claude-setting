@@ -333,5 +333,5 @@ Check `packageManager` field in `package.json` to determine the project's packag
 
 ### Custom Skills
 
-Git/커밋 작업 시 `~/.claude/skills/my-git/` 규칙을 **반드시** 따를 것.
+Git/커밋 작업 시 `~/.claude/skills/git-master/` 규칙을 **반드시** 따를 것.
 Frontend 작업 시 `~/.claude/skills/my-frontend/` 가이드라인을 참고할 것.
