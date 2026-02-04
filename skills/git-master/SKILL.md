@@ -36,8 +36,24 @@ Git 커밋, 브랜치, PR 관련 사용자 커스텀 규칙입니다.
 
 **저장소**: AWS CodeCommit (GitHub 아님)
 - `gh` CLI 대신 `aws codecommit` CLI 사용
-- **CodeCommit 프로젝트는 `--profile gentle` 필수**
 - **Merge는 반드시 로컬에서 `AaronYun <hyensooyoon@gmail.com>` author로 수행** (CLI merge 금지)
+
+### ⚠️ CodeCommit AWS Profile (CRITICAL)
+
+**CodeCommit 관련 `aws` CLI 명령은 반드시 `--profile gentle` 사용:**
+
+```bash
+# ✅ 올바른 사용
+aws codecommit create-pull-request --profile gentle ...
+aws codecommit get-pull-request --profile gentle ...
+aws codecommit merge-pull-request-by-three-way --profile gentle ...
+
+# ❌ 절대 금지 (다른 프로파일 사용)
+aws codecommit ... --profile lg    # 접근 불가
+aws codecommit ...                  # 기본 프로파일 사용 금지
+```
+
+**이유:** CodeCommit 저장소는 `gentle` 프로파일의 AWS 계정에만 존재함
 
 **GitHub Flow 사용:**
 1. `main`은 항상 배포 가능 상태
