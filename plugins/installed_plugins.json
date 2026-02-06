@@ -19,6 +19,96 @@
         "lastUpdated": "2026-01-21T03:29:42.183Z",
         "gitCommitSha": "e7c9c6f3a79118e106b8e40778d7e8490b12389e"
       }
+    ],
+    "ralph-loop@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/ralph-loop/236752ad9ab3",
+        "version": "236752ad9ab3",
+        "installedAt": "2026-02-06T07:24:52.062Z",
+        "lastUpdated": "2026-02-06T07:24:52.062Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
+    ],
+    "claude-hud@claude-hud": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-hud/claude-hud/0.0.6",
+        "version": "0.0.6",
+        "installedAt": "2026-02-06T07:36:19.319Z",
+        "lastUpdated": "2026-02-06T07:36:19.319Z",
+        "gitCommitSha": "901025c42c0cac967f10167a4ed01c515394bd51"
+      }
+    ],
+    "frontend-design@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/236752ad9ab3",
+        "version": "236752ad9ab3",
+        "installedAt": "2026-02-06T07:39:34.590Z",
+        "lastUpdated": "2026-02-06T07:39:34.590Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
+    ],
+    "typescript-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-06T07:39:34.610Z",
+        "lastUpdated": "2026-02-06T07:39:34.610Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
+    ],
+    "playwright@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/236752ad9ab3",
+        "version": "236752ad9ab3",
+        "installedAt": "2026-02-06T07:39:34.620Z",
+        "lastUpdated": "2026-02-06T07:39:34.620Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
+    ],
+    "pyright-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/pyright-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-06T07:39:34.645Z",
+        "lastUpdated": "2026-02-06T07:39:34.645Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
+    ],
+    "figma@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-06T07:39:37.782Z",
+        "lastUpdated": "2026-02-06T07:39:37.782Z",
+        "gitCommitSha": "20aca44ee6ba6092037e943c151c067896828360"
+      }
+    ],
+    "claude-md-management@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/claude-md-management/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-06T07:39:37.803Z",
+        "lastUpdated": "2026-02-06T07:39:37.803Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
+    ],
+    "rust-analyzer-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/rust-analyzer-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-02-06T07:39:37.813Z",
+        "lastUpdated": "2026-02-06T07:39:37.813Z",
+        "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
+      }
     ]
   }
 }

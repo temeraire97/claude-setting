@@ -34,7 +34,36 @@ Git 커밋, 브랜치, PR 관련 사용자 커스텀 규칙입니다.
 
 ## Git Workflow
 
-**저장소**: AWS CodeCommit (GitHub 아님)
+### 저장소 타입별 워크플로우
+
+| 저장소 | PR 생성 | Merge 방식 | CLI |
+|--------|---------|------------|-----|
+| **GitHub** | `gh pr create` | **GitHub 웹/CLI에서 직접 merge** | `gh` |
+| **CodeCommit** | `aws codecommit` | **로컬 merge 필수** (author 문제) | `aws` |
+
+---
+
+### GitHub 프로젝트
+
+**GitHub은 로컬 merge가 필요 없음** - 웹 UI 또는 CLI에서 직접 merge:
+
+```bash
+# 1. PR 생성
+gh pr create --title "feat(scope): 변경 요약" --body "..." --base main
+
+# 2. PR merge (웹에서 또는 CLI)
+gh pr merge <PR-NUMBER> --squash  # 또는 --merge, --rebase
+
+# 3. 로컬 동기화 & 브랜치 삭제
+git checkout main && git pull
+git branch -d <branch-name>
+```
+
+---
+
+### CodeCommit 프로젝트
+
+**CodeCommit은 로컬 merge 필수** - CLI merge는 AWS IAM 사용자로 커밋됨:
 - `gh` CLI 대신 `aws codecommit` CLI 사용
 - **Merge는 반드시 로컬에서 `AaronYun <hyensooyoon@gmail.com>` author로 수행** (CLI merge 금지)
 
