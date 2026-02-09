@@ -13,5 +13,9 @@
     "claude-md-management@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c '\"/Users/hyunoo/.bun/bin/bun\" \"$(ls -td ~/.claude/plugins/cache/claude-hud/claude-hud/*/ 2>/dev/null | head -1)src/index.ts\"'"
+  }
 }
