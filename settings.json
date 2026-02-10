@@ -2,6 +2,10 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c '\"/Users/hyunoo/.bun/bin/bun\" \"$(ls -td ~/.claude/plugins/cache/claude-hud/claude-hud/*/ 2>/dev/null | head -1)src/index.ts\"'"
+  },
   "enabledPlugins": {
     "ralph-loop@claude-plugins-official": true,
     "claude-hud@claude-hud": true,
@@ -11,11 +15,8 @@
     "pyright-lsp@claude-plugins-official": true,
     "figma@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
-    "rust-analyzer-lsp@claude-plugins-official": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "atlassian@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "statusLine": {
-    "type": "command",
-    "command": "bash -c '\"/Users/hyunoo/.bun/bin/bun\" \"$(ls -td ~/.claude/plugins/cache/claude-hud/claude-hud/*/ 2>/dev/null | head -1)src/index.ts\"'"
-  }
+  "alwaysThinkingEnabled": true
 }
