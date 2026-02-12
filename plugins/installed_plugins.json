@@ -83,10 +83,10 @@
     "figma@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/1.0.0",
-        "version": "1.0.0",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/1.1.0",
+        "version": "1.1.0",
         "installedAt": "2026-02-06T07:39:37.782Z",
-        "lastUpdated": "2026-02-06T07:39:37.782Z",
+        "lastUpdated": "2026-02-12T01:21:49.150Z",
         "gitCommitSha": "20aca44ee6ba6092037e943c151c067896828360"
       }
     ],
