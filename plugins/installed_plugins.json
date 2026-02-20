@@ -113,10 +113,10 @@
     "atlassian@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/atlassian/25068023d507",
-        "version": "25068023d507",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/atlassian/9e74c3938b98",
+        "version": "9e74c3938b98",
         "installedAt": "2026-02-10T06:04:06.980Z",
-        "lastUpdated": "2026-02-10T06:04:06.980Z",
+        "lastUpdated": "2026-02-20T01:00:07.225Z",
         "gitCommitSha": "25068023d5078c7f1050c533da139304d8bc204d"
       }
     ]
