@@ -23,10 +23,10 @@
     "ralph-loop@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/ralph-loop/99e11d959269",
-        "version": "99e11d959269",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/ralph-loop/55b58ec6e564",
+        "version": "55b58ec6e564",
         "installedAt": "2026-02-06T07:24:52.062Z",
-        "lastUpdated": "2026-02-24T07:16:50.241Z",
+        "lastUpdated": "2026-02-25T05:05:53.162Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -43,10 +43,10 @@
     "frontend-design@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/99e11d959269",
-        "version": "99e11d959269",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/55b58ec6e564",
+        "version": "55b58ec6e564",
         "installedAt": "2026-02-06T07:39:34.590Z",
-        "lastUpdated": "2026-02-24T07:16:50.232Z",
+        "lastUpdated": "2026-02-25T05:05:53.158Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -63,10 +63,10 @@
     "playwright@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/99e11d959269",
-        "version": "99e11d959269",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/55b58ec6e564",
+        "version": "55b58ec6e564",
         "installedAt": "2026-02-06T07:39:34.620Z",
-        "lastUpdated": "2026-02-24T07:16:50.227Z",
+        "lastUpdated": "2026-02-25T05:05:53.144Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
