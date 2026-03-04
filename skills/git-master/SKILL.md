@@ -38,7 +38,7 @@ Git 커밋, 브랜치, PR 관련 사용자 커스텀 규칙입니다.
 
 | 저장소 | PR 생성 | Merge 방식 | CLI |
 |--------|---------|------------|-----|
-| **GitHub** | `gh pr create` | **GitHub 웹/CLI에서 직접 merge** | `gh` |
+| **GitHub** | `gh pr create` | **3-way merge (`--merge`)** | `gh` |
 | **CodeCommit** | `aws codecommit` | **로컬 merge 필수** (author 문제) | `aws` |
 
 ---
@@ -51,8 +51,8 @@ Git 커밋, 브랜치, PR 관련 사용자 커스텀 규칙입니다.
 # 1. PR 생성
 gh pr create --title "feat(scope): 변경 요약" --body "..." --base main
 
-# 2. PR merge (웹에서 또는 CLI)
-gh pr merge <PR-NUMBER> --squash  # 또는 --merge, --rebase
+# 2. PR merge (3-way merge 기본)
+gh pr merge <PR-NUMBER> --merge
 
 # 3. 로컬 동기화 & 브랜치 삭제
 git checkout main && git pull
