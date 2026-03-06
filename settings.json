@@ -20,5 +20,10 @@
   },
   "alwaysThinkingEnabled": true,
   "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "high"
+  "effortLevel": "high",
+  "permissions": {
+    "allow": [
+      "mcp__pencil"
+    ]
+  }
 }
