@@ -23,10 +23,10 @@
     "ralph-loop@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/ralph-loop/205b6e0b3036",
-        "version": "205b6e0b3036",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/ralph-loop/b36fd4b75301",
+        "version": "b36fd4b75301",
         "installedAt": "2026-02-06T07:24:52.062Z",
-        "lastUpdated": "2026-03-04T01:17:52.917Z",
+        "lastUpdated": "2026-03-12T02:33:44.738Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -43,10 +43,10 @@
     "frontend-design@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/205b6e0b3036",
-        "version": "205b6e0b3036",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/b36fd4b75301",
+        "version": "b36fd4b75301",
         "installedAt": "2026-02-06T07:39:34.590Z",
-        "lastUpdated": "2026-03-04T01:17:52.909Z",
+        "lastUpdated": "2026-03-12T02:33:44.728Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -63,10 +63,10 @@
     "playwright@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/205b6e0b3036",
-        "version": "205b6e0b3036",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/b36fd4b75301",
+        "version": "b36fd4b75301",
         "installedAt": "2026-02-06T07:39:34.620Z",
-        "lastUpdated": "2026-03-04T01:17:52.905Z",
+        "lastUpdated": "2026-03-12T02:33:44.723Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -113,10 +113,10 @@
     "atlassian@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/atlassian/76c7671c4ded",
-        "version": "76c7671c4ded",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/atlassian/385c1469c567",
+        "version": "385c1469c567",
         "installedAt": "2026-02-10T06:04:06.980Z",
-        "lastUpdated": "2026-03-09T01:04:13.487Z",
+        "lastUpdated": "2026-03-12T02:33:46.168Z",
         "gitCommitSha": "25068023d5078c7f1050c533da139304d8bc204d"
       }
     ]
