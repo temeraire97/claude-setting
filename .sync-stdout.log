@@ -142,3 +142,27 @@ After doing this, you may fix the identity used for this commit with:
  3 files changed, 14 insertions(+), 11 deletions(-)
 [main 60c0012] chore(claude): auto-sync 2026-03-24 19:00
  3 files changed, 14 insertions(+), 12 deletions(-)
+[main 8450dd3] chore(claude): auto-sync 2026-03-25 19:00
+ 26 files changed, 68 insertions(+), 35 deletions(-)
+ create mode 120000 skills/adapt
+ create mode 120000 skills/animate
+ create mode 120000 skills/arrange
+ create mode 120000 skills/audit
+ create mode 120000 skills/bolder
+ create mode 120000 skills/clarify
+ create mode 120000 skills/colorize
+ create mode 120000 skills/critique
+ create mode 120000 skills/delight
+ create mode 120000 skills/distill
+ create mode 120000 skills/extract
+ create mode 120000 skills/find-skills
+ create mode 120000 skills/frontend-design
+ create mode 120000 skills/harden
+ create mode 120000 skills/normalize
+ create mode 120000 skills/onboard
+ create mode 120000 skills/optimize
+ create mode 120000 skills/overdrive
+ create mode 120000 skills/polish
+ create mode 120000 skills/quieter
+ create mode 120000 skills/teach-impeccable
+ create mode 120000 skills/typeset
