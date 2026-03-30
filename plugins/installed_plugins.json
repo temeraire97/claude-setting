@@ -23,10 +23,10 @@
     "ralph-loop@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/ralph-loop/unknown",
-        "version": "unknown",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/ralph-loop/1.0.0",
+        "version": "1.0.0",
         "installedAt": "2026-02-06T07:24:52.062Z",
-        "lastUpdated": "2026-03-25T07:25:07.190Z",
+        "lastUpdated": "2026-03-30T00:53:27.983Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
