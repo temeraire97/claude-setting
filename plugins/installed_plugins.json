@@ -83,10 +83,10 @@
     "figma@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/2.0.2",
-        "version": "2.0.2",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/2.0.7",
+        "version": "2.0.7",
         "installedAt": "2026-02-06T07:39:37.782Z",
-        "lastUpdated": "2026-03-25T00:27:16.021Z",
+        "lastUpdated": "2026-04-01T01:08:09.248Z",
         "gitCommitSha": "20aca44ee6ba6092037e943c151c067896828360"
       }
     ],
@@ -118,6 +118,16 @@
         "installedAt": "2026-02-10T06:04:06.980Z",
         "lastUpdated": "2026-03-12T02:33:46.168Z",
         "gitCommitSha": "25068023d5078c7f1050c533da139304d8bc204d"
+      }
+    ],
+    "vercel@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/vercel/7807a6aabad5",
+        "version": "7807a6aabad5",
+        "installedAt": "2026-04-01T07:51:45.059Z",
+        "lastUpdated": "2026-04-01T07:51:45.059Z",
+        "gitCommitSha": "7807a6aabad5bbb118d989252cade51313efb0e4"
       }
     ]
   }

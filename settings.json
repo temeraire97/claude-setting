@@ -76,11 +76,9 @@
     "figma@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
-    "atlassian@claude-plugins-official": true
+    "atlassian@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
   },
-  "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true,
   "extraKnownMarketplaces": {
     "impeccable": {
       "source": {
@@ -88,5 +86,8 @@
         "repo": "pbakaus/impeccable"
       }
     }
-  }
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "skipDangerousModePermissionPrompt": true
 }
