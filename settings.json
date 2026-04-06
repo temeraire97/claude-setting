@@ -4,8 +4,22 @@
   },
   "permissions": {
     "allow": [
-      "mcp__pencil"
-    ]
+      "mcp__pencil",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(/bin/zsh -i -c \"git status\")",
+      "Bash(grep:*)",
+      "Bash(wc:*)",
+      "Bash(ls:*)",
+      "Bash(git checkout:*)",
+      "WebFetch(domain:gist.github.com)",
+      "Bash(tree:*)",
+      "Bash(aws codecommit create-pull-request:*)"
+    ],
+    "defaultMode": "dontAsk"
   },
   "hooks": {
     "UserPromptSubmit": [
@@ -87,6 +101,7 @@
       }
     }
   },
+  "language": "Korean, 한국어",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true
