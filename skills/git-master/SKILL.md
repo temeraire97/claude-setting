@@ -69,20 +69,20 @@ git branch -d <branch-name>
 
 ### ⚠️ CodeCommit AWS Profile (CRITICAL)
 
-**CodeCommit 관련 `aws` CLI 명령은 반드시 `--profile gentle` 사용:**
+**CodeCommit 관련 `aws` CLI 명령은 반드시 `--profile devgentlepie` 사용:**
 
 ```bash
 # ✅ 올바른 사용
-aws codecommit create-pull-request --profile gentle ...
-aws codecommit get-pull-request --profile gentle ...
-aws codecommit merge-pull-request-by-three-way --profile gentle ...
+aws codecommit create-pull-request --profile devgentlepie ...
+aws codecommit get-pull-request --profile devgentlepie ...
+aws codecommit merge-pull-request-by-three-way --profile devgentlepie ...
 
 # ❌ 절대 금지 (다른 프로파일 사용)
 aws codecommit ... --profile lg    # 접근 불가
 aws codecommit ...                  # 기본 프로파일 사용 금지
 ```
 
-**이유:** CodeCommit 저장소는 `gentle` 프로파일의 AWS 계정에만 존재함
+**이유:** CodeCommit 저장소는 `devgentlepie` 프로파일의 AWS 계정에만 존재함
 
 **GitHub Flow 사용:**
 1. `main`은 항상 배포 가능 상태
@@ -158,7 +158,7 @@ git branch -D staging-qa
 ```bash
 # PR 생성 (CodeCommit)
 aws codecommit create-pull-request \
-  --profile gentle \
+  --profile devgentlepie \
   --title "feat(scope): 변경 요약" \
   --description "## Summary
 - 변경사항 1
@@ -172,13 +172,13 @@ aws codecommit create-pull-request \
 **워크플로우:**
 1. 작업 완료 후 `git push`
 2. **PR 생성** (위 명령어)
-3. PR URL 확인: `aws codecommit get-pull-request --profile gentle --pull-request-id <id>`
+3. PR URL 확인: `aws codecommit get-pull-request --profile devgentlepie --pull-request-id <id>`
 4. 리뷰 후 **CodeCommit 콘솔에서 merge** 또는 CLI로 merge
 
 ```bash
 # PR merge (CodeCommit)
 aws codecommit merge-pull-request-by-three-way \
-  --profile gentle \
+  --profile devgentlepie \
   --pull-request-id <id> \
   --repository-name editup_service
 ```
@@ -194,7 +194,7 @@ aws codecommit merge-pull-request-by-three-way \
 ```bash
 # 1. PR 생성 (기록용 - 위와 동일)
 aws codecommit create-pull-request \
-  --profile gentle \
+  --profile devgentlepie \
   --title "feat(scope): 변경 요약" \
   --description "..." \
   --targets repositoryName=editup_service,sourceReference=<branch-name>,destinationReference=main

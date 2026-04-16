@@ -204,3 +204,6 @@ After doing this, you may fix the identity used for this commit with:
  4 files changed, 13 insertions(+), 9 deletions(-)
 [main 360fadb] chore(claude): auto-sync 2026-04-14 19:04
  2 files changed, 4 insertions(+), 4 deletions(-)
+[main 2a4d1e4] chore(claude): auto-sync 2026-04-15 19:38
+ 4 files changed, 282 insertions(+), 5 deletions(-)
+ create mode 100644 skills/task-loop/SKILL.md
