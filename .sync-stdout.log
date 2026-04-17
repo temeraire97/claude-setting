@@ -207,3 +207,5 @@ After doing this, you may fix the identity used for this commit with:
 [main 2a4d1e4] chore(claude): auto-sync 2026-04-15 19:38
  4 files changed, 282 insertions(+), 5 deletions(-)
  create mode 100644 skills/task-loop/SKILL.md
+[main 6355f60] chore(claude): auto-sync 2026-04-16 19:00
+ 3 files changed, 14 insertions(+), 12 deletions(-)
