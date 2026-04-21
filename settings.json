@@ -19,7 +19,7 @@
       "Bash(tree:*)",
       "Bash(aws codecommit create-pull-request:*)"
     ],
-    "defaultMode": "dontAsk"
+    "defaultMode": "auto"
   },
   "hooks": {
     "UserPromptSubmit": [
@@ -104,5 +104,6 @@
   "language": "Korean, 한국어",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true
 }
