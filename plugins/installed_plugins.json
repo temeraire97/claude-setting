@@ -123,10 +123,10 @@
     "vercel@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/vercel/0.40.0",
-        "version": "0.40.0",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/vercel/0.40.1",
+        "version": "0.40.1",
         "installedAt": "2026-04-01T07:51:45.059Z",
-        "lastUpdated": "2026-04-13T01:18:57.214Z",
+        "lastUpdated": "2026-05-05T23:08:33.779Z",
         "gitCommitSha": "7807a6aabad5bbb118d989252cade51313efb0e4"
       }
     ],
