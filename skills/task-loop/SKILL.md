@@ -1,87 +1,94 @@
 ---
 name: task-loop
 description: |
-  여러 태스크로 쪼개지는 대규모 구현 작업을 "브랜치 생성 → 태스크 분해 → 구현 팀 → git-master 커밋 → 검증 팀(병렬) → 재귀 수정 → PR 머지" 의 재귀 파이프라인으로 실행합니다.
-  기능 개발, 대규모 리팩터링, 마이그레이션, 멀티 파일 변경 등 여러 커밋이 필요한 작업에 사용하세요.
-  작은 단일 변경(타이포 수정, 1 파일 수정)에는 과한 프로세스이므로 사용하지 마세요.
+  Executes large-scale implementation work that splits into multiple tasks as a recursive pipeline: "branch creation → task decomposition → implementation team (parallel where possible + head re-verification) → git-master commit → verification team (parallel) → recursive fixes → PR merge".
+  Use for feature development, large refactors, migrations, multi-file changes — anything requiring multiple commits.
+  Do NOT use for small single changes (typo fixes, single-file edits) — the process is overkill.
 ---
 
-# Task Loop — 재귀 파이프라인
+# Task Loop — Recursive Pipeline
 
-> 하나의 작업 단위(Unit of Work)를 **Task 단위로 분해·커밋·검증**하는 재귀적 구현 프로세스.
+> A recursive implementation process that **decomposes, commits, and verifies a Unit of Work task-by-task**.
 
 ---
 
-## 1. 개요
+## 1. Overview
 
-**계층**: `Unit of Work(브랜치) → Task(커밋) → Verification(재귀 수정)`
+**Hierarchy**: `Unit of Work (branch) → Task (commit) → Verification (recursive fixes)`
 
-1개 단위 작업 = 1 브랜치 = 1 PR. 브랜치 내부는 N개의 태스크로 쪼개지고, 각 태스크는 1 커밋에 대응된다. 모든 태스크 완료 후 **검증 팀이 병렬로 리뷰**하고, 이슈가 발견되면 같은 단위 작업 내에서 `[FIX]` 태스크로 재귀.
+1 Unit of Work = 1 branch = 1 PR. Inside the branch, work is broken into N tasks, each mapped to 1 commit. Independent tasks may run **in parallel via an implementation team**, after which the **head agent re-verifies the parallel outputs** before moving on. Once all tasks are complete, a **verification team reviews in parallel**, and any issues spawn `[FIX]` tasks recursively within the same Unit of Work.
 
 ```
 Unit of Work
-   ├── 브랜치 생성 (prefix 없음, 설명형 이름)
-   ├── TaskCreate 분해
-   ├── 구현 루프
-   │     └─ 각 task: in_progress → implement → git-master 커밋 → completed
-   ├── 검증 팀 (병렬)
+   ├── Create branch (no prefix, descriptive name)
+   ├── TaskCreate decomposition
+   ├── Dependency analysis → parallelizable groups
+   ├── Implementation loop
+   │     ├─ Sequential tasks: in_progress → implement → git-master commit → completed
+   │     └─ Parallel group:
+   │           ├─ Spawn N executors in a single message
+   │           ├─ Head agent re-verifies merged output (consistency, conflicts, contract drift)
+   │           └─ git-master commits (one per task, or grouped logically)
+   ├── Verification team (parallel)
    │     ├─ code-reviewer
-   │     ├─ architect-medium (복잡한 작업이면 architect/Opus)
-   │     └─ WebSearch (현재 연도 포함)
-   ├── ❓ 이슈 발견?
-   │     └─ Yes → [FIX] TaskCreate → 구현 → git-master 커밋 → 경량 재검증(code-reviewer-low)
-   │          └─ 재귀 깊이 최대 2회. 3회째는 사용자에게 상황 보고 + 의사결정 요청
-   ├── PR 생성 (gh pr create)
-   └── PR 머지 + 브랜치 삭제 (gh pr merge --merge --delete-branch)
+   │     ├─ architect-medium (use architect/Opus for complex work)
+   │     └─ WebSearch (must include current year)
+   ├── ❓ Issues found?
+   │     └─ Yes → [FIX] TaskCreate → implement → git-master commit → lightweight re-verify (code-reviewer-low)
+   │          └─ Max recursion depth 2. On the 3rd round, report to user and request a decision.
+   ├── Create PR (gh pr create)
+   └── Merge PR + delete branch (gh pr merge --merge --delete-branch)
 ```
 
 ---
 
-## 2. 트리거 조건
+## 2. Trigger Conditions
 
-다음 중 하나라도 해당하면 Task Loop를 적용:
+Apply Task Loop if **any** of the following hold:
 
-- 변경이 3개 이상의 파일에 걸침
-- 구현 + 테스트가 한 세션에 함께 들어감
-- 검증이 필요한 설계 결정이 포함됨
-- 사용자가 "팀 구성해서", "태스크 리스트", "검증해서" 같은 표현을 사용
-- 이전 세션에서 작성된 계획서(plan file, 명세서)를 실행하는 맥락
+- Change spans 3 or more files
+- Implementation + tests land together in one session
+- A design decision requires validation
+- User says things like "form a team", "task list", "verify it"
+- The session is executing a plan/spec authored in an earlier session
 
-**반대로 Task Loop을 쓰지 말아야 할 때**:
-- 1~2 파일 단순 수정, 타이포 교정
-- 이미 다른 브랜치에서 작업 중이라 브랜치 전환이 부적절
-- 사용자가 "그냥 바로 고쳐줘" 같은 최소 프로세스를 요청
-- 읽기/조사 위주 작업 (Explore로 충분)
+**When NOT to use Task Loop**:
+- Trivial 1–2 file edits, typo fixes
+- Already in the middle of another branch where switching is inappropriate
+- User explicitly asks for a minimal process ("just fix it directly")
+- Read-only / investigation work (Explore is enough)
 
 ---
 
-## 3. 역할 (팀 구성)
+## 3. Roles (Team Composition)
 
-| 팀 | 구성 | 투입 시점 | 산출물 |
+| Team | Members | When deployed | Output |
 |---|---|---|---|
-| **구현 팀** | `executor` 에이전트 또는 메인 에이전트 직접 | 각 Task | 코드 + 커밋 |
-| **검증 팀** | `code-reviewer` + `architect-medium` + `WebSearch` 병렬 | Task 전부 완료 직후 | 이슈 리포트 (OK/WARN/BLOCK) |
-| **경량 재검증** | `code-reviewer-low` 단독 | `[FIX]` 커밋 완료 후 | 통과 판정 |
+| **Implementation Team (sequential)** | `executor` agent OR main agent directly | Each dependent task | Code + commit |
+| **Implementation Team (parallel)** | Multiple `executor` agents in one message | Group of independent tasks | Code from N agents, merged |
+| **Head Re-verification** | Main agent | After every parallel group | Cross-file consistency report, drift fix list |
+| **Verification Team** | `code-reviewer` + `architect-medium` + `WebSearch`, parallel | After all tasks complete | Issue report (OK/WARN/BLOCK) |
+| **Lightweight Re-verify** | `code-reviewer-low` alone | After each `[FIX]` commit | Pass/fail verdict |
 
-**원칙**:
-- 작은 태스크(설정 한 줄, 어노테이션 추가)는 메인 에이전트가 직접 구현. executor 스폰 오버헤드가 구현 비용보다 큼.
-- 복잡한 태스크(복합 로직, 여러 파일, reactive/async 체인)는 반드시 executor 스폰.
-- 검증 팀은 **반드시 병렬** 실행. 단일 메시지에 여러 Agent 호출.
+**Principles**:
+- Tiny tasks (one-line config, adding an annotation) → main agent implements directly. Spawning an executor costs more than the work.
+- Complex tasks (composite logic, multi-file, reactive/async chains) → MUST spawn executor.
+- The verification team **MUST run in parallel** — multiple Agent calls in a single message.
 
 ---
 
-## 4. 단계별 흐름
+## 4. Step-by-step Flow
 
-### Step 1. 사전 확인
+### Step 1. Pre-flight
 
 ```
-1. 영향받는 모든 저장소의 git 상태 확인
-2. 현재 main이 최신인지 (git pull --ff-only)
-3. 이전 관련 작업의 Done 조건 충족 여부
-4. 사용자의 로컬 환경 규칙 확인 (CLAUDE.md, 빌드 금지 규칙 등)
+1. Check git status across all affected repos
+2. Ensure main is up to date (git pull --ff-only)
+3. Confirm previous related work meets its Done criteria
+4. Re-read local environment rules (CLAUDE.md, no-build rules, etc.)
 ```
 
-### Step 2. 브랜치 생성
+### Step 2. Create branch
 
 ```bash
 git checkout main
@@ -89,186 +96,235 @@ git pull --ff-only
 git checkout -b {descriptive-name}
 ```
 
-**브랜치 네이밍 규칙**:
-- ❌ 금지: `feat/`, `fix/`, `chore/`, `docs/` 같은 Git Flow 스타일 prefix
-- ✅ 권장: 작업을 설명하는 이름 (예: `redis-state-layer`, `user-content-cache`, `add-jenkins-pipeline`)
-- 크로스 저장소 작업: 각 저장소에 **동일한 이름**으로 브랜치 생성
+**Branch naming rules**:
+- ❌ Forbidden: Git Flow prefixes like `feat/`, `fix/`, `chore/`, `docs/`
+- ✅ Preferred: descriptive name (e.g. `redis-state-layer`, `user-content-cache`, `add-jenkins-pipeline`)
+- Cross-repo work: create branches with the **same name** in every affected repo
 
-### Step 3. Task List 생성
+### Step 3. Build task list
 
 ```
 TaskCreate × N
   - subject: imperative ("Add X", "Refactor Y")
-  - description: 파일 경로 + 수용 조건 + 의존 정보
-  - 마지막 태스크는 반드시 "Verification team review"
+  - description: file paths + acceptance criteria + dependency notes
+  - The final task MUST be "Verification team review"
 ```
 
-**태스크 분해 원칙**:
-- 1 Task = 1 Commit = 1 파일 또는 1 논리적 변경
-- 파일 4개 이상을 한 태스크에서 건드리면 쪼개기
-- Task ID는 **생성 순서가 아닌 의존 순서**로 만들 것
-- 검증 태스크를 반드시 별도로 포함
+**Decomposition principles**:
+- 1 Task = 1 Commit = 1 file OR 1 logical change
+- If a task touches 4+ files, split it
+- Task IDs reflect **dependency order**, not creation order
+- Always include the verification task as a separate item
+- **Mark dependencies explicitly** so the head agent can identify parallelizable groups
 
-### Step 4. 구현 루프
+### Step 3.5. Dependency analysis & parallelization
 
-각 Task마다:
+Before the implementation loop, the head agent classifies tasks:
+
+```
+For each task, list its blockers (tasks whose output it reads or extends).
+Tasks with no shared blockers and no shared files form a "parallel group".
+```
+
+Rules for parallel groups:
+- Members must not touch **the same file**.
+- Members must not depend on each other's output (no read-after-write between them).
+- If unsure, treat as sequential. Conservative is correct.
+
+Example layout:
+```
+T1 (sequential, scaffolds the module)
+└── T2, T3, T4 (parallel group: independent feature files)
+        └── T5 (sequential, integrates T2–T4)
+            └── T6 (Verification team)
+```
+
+### Step 4. Implementation loop
+
+**4a. Sequential task** — for each task:
 
 ```
 1. TaskUpdate(in_progress)
-2. 구현 (Edit/Write)
-   - 의존 파일을 먼저 Read 또는 Grep으로 확인
-   - 기존 패턴/컨벤션 답습 (신규 발명 금지)
-3. Skill(git-master) 커밋 OR 직접 git add + git commit
-   - 한국어 conventional commit (type(scope): message)
-   - scope 필수
-   - ⛔ 절대 Claude fingerprint 금지
+2. Implement (Edit/Write)
+   - Read or Grep dependent files first
+   - Follow existing patterns/conventions (no novel inventions)
+3. Skill(git-master) commit OR direct git add + git commit
+   - Korean conventional commit (type(scope): message)
+   - scope is required
+   - ⛔ NEVER include a Claude fingerprint
 4. TaskUpdate(completed)
 ```
 
-**커밋 규칙**:
-- `type(scope): 한국어 본문` 형식
-- 1차 본문에는 WHY, 2차+ 본문에는 WHAT
-- 1 커밋 = 논리적으로 분리 가능한 최소 단위
-- untracked 파일 보호 — 필요한 파일만 명시 스테이징 (`git add .` 금지)
-- 로컬 빌드 명령 금지 (`./gradlew build`, `npm run build` 등) — 사용자가 직접 검증
-
-### Step 5. 검증 팀 (모든 Task 완료 후)
-
-**3개 독립 에이전트 병렬 실행** (단일 메시지에 세 tool call):
+**4b. Parallel group** — for each group of independent tasks:
 
 ```
-Agent(code-reviewer)      → 코드 품질, 버그, 보안, 컨벤션
-Agent(architect-medium)   → 설계 정합성, 계획서 일치, 아키텍처 건전성
-WebSearch({query} 2026)   → 업계 베스트 프랙티스 (반드시 현재 연도 포함)
+1. TaskUpdate(in_progress) on every member task
+2. Spawn N executor agents in a SINGLE message (parallel tool calls)
+   - Each executor gets: its task spec, files it owns, files it must not touch,
+     and the shared conventions it must follow
+3. Wait for all executors to finish
+4. Head agent re-verification pass:
+   - Read every file that was modified
+   - Check: naming consistency across files, shared types/interfaces match,
+     duplicate logic, conflicting assumptions, dangling imports, ABI/contract drift
+   - If drift found: fix directly (small) OR add an inline [FIX] task (large)
+5. Commit per task via git-master
+   - If executors made interleaved edits, split into logical commits — do NOT lump
+6. TaskUpdate(completed) on every member task
 ```
 
-**복잡도에 따른 검증 깊이 조정**:
-- 단순 변경: `code-reviewer-low` + WebSearch만
-- 표준: 위 3종
-- 복잡/위험한 변경: `code-reviewer`(Opus) + `architect`(Opus) + 2~3 WebSearch
+The head re-verification step is non-negotiable for parallel groups. Parallel agents don't see each other's work; the head is the only place inconsistencies get caught before the verification team sees them.
 
-### Step 6. 이슈 등급
+**Commit rules**:
+- Format: `type(scope): Korean body`
+- First line = WHY, body = WHAT
+- 1 commit = smallest logically separable unit
+- Protect untracked files — stage only what is needed (`git add .` is forbidden)
+- No local build commands (`./gradlew build`, `npm run build`, etc.) — user verifies manually
 
-검증 팀 출력은 반드시 다음 3등급 중 하나로 분류:
+### Step 5. Verification team (after all tasks complete)
 
-| 등급 | 의미 | 액션 |
+**Run 3 independent agents in parallel** (three tool calls in one message):
+
+```
+Agent(code-reviewer)      → code quality, bugs, security, conventions
+Agent(architect-medium)   → design coherence, plan alignment, architectural health
+WebSearch({query} 2026)   → industry best practices (current year MANDATORY)
+```
+
+**Adjust depth by complexity**:
+- Simple change: `code-reviewer-low` + WebSearch only
+- Standard: the three above
+- Complex/risky change: `code-reviewer` (Opus) + `architect` (Opus) + 2–3 WebSearches
+
+### Step 6. Issue triage
+
+Verification team output must be classified into one of three grades:
+
+| Grade | Meaning | Action |
 |---|---|---|
-| ✅ **OK** | 통과 | 진행 |
-| ⚠️ **WARN** | 권장 수정 | 가능하면 반영, 시간 제약 시 TODO 기록 후 진행 |
-| 🛑 **BLOCK** | 차단 | 반드시 수정 후 재검증 |
+| ✅ **OK** | Pass | Continue |
+| ⚠️ **WARN** | Recommended fix | Apply if feasible; record TODO if time-constrained and continue |
+| 🛑 **BLOCK** | Blocker | Must fix and re-verify |
 
-BLOCK이 하나라도 있으면 Step 7로, 없으면 Step 8로.
+If any BLOCK exists → Step 7. Otherwise → Step 8.
 
-### Step 7. 재귀 수정 루프
+### Step 7. Recursive fix loop
 
 ```
-1. 이슈별로 [FIX] TaskCreate
+1. TaskCreate one [FIX] task per issue
    - subject prefix: "[FIX] "
-   - description: 원인 + 수정 범위 + 파일:라인
-2. 구현 루프 (Step 4 반복)
-3. 경량 재검증 (code-reviewer-low 단독, WebSearch 생략)
-4. 재귀 깊이 제한:
-   - 1회: 정상
-   - 2회: 경고 출력 후 진행
-   - 3회: 중단. 사용자에게 상황 보고 + 결정권 이양
+   - description: root cause + scope + file:line
+2. Implementation loop (repeat Step 4)
+3. Lightweight re-verify (code-reviewer-low alone, skip WebSearch)
+4. Recursion depth limits:
+   - 1st round: normal
+   - 2nd round: print a warning, continue
+   - 3rd round: STOP. Report to user and hand over the decision.
 ```
 
-### Step 8. PR 생성
+### Step 8. Create PR
 
 ```bash
 git push -u origin {branch}
-gh pr create --base main --head {branch} --title "type(scope): 요약" --body "..."
+gh pr create --base main --head {branch} --title "type(scope): summary" --body "..."
 ```
 
-**PR 본문 템플릿**:
+**PR body template**:
 
 ```markdown
 ## Summary
-{1-3 bullet points, why + what}
+{1–3 bullets, why + what}
 
-### 변경 사항
-- 파일/영역별 요약
+### Changes
+- Per-file / per-area summary
 
-### 설계 원칙
-- 핵심 결정 사항
+### Design principles
+- Key decisions
 
 ## Test plan
-- [x] 완료된 자동 검증
-- [ ] 수동 확인 필요한 항목
+- [x] Completed automated checks
+- [ ] Items needing manual verification
 
-## 후속 작업 (선택)
-{다음 단계 참조}
+## Follow-ups (optional)
+{next-step pointers}
 ```
 
-### Step 9. 머지 + 정리 (승인 시)
+### Step 9. Merge + cleanup (on approval)
 
 ```bash
 gh pr merge {N} --merge --delete-branch
-# 로컬/원격 브랜치 자동 삭제
+# Deletes local and remote branches automatically
 ```
 
-**주의**: 머지는 **사용자 승인 후**에만 실행. 자동 머지는 금지. 사용자가 `/git-master merge` 같은 명시적 명령을 줄 때만 수행.
+**Warning**: only merge **after explicit user approval**. Auto-merge is forbidden. Only run it when the user issues an explicit command like `/git-master merge`.
 
 ---
 
-## 5. 불변 규칙 (절대 어기면 안 됨)
+## 5. Invariants (Never Violate)
 
-1. **Claude fingerprint 금지** — 커밋/PR/문서 어디에도
-2. **로컬 빌드 명령 금지** (`./gradlew build`, `npm run build`, `pnpm build` 등) — 사용자가 직접 검증
-3. **브랜치 prefix 금지** — `feat/`, `fix/`, `chore/` 등
-4. **한국어 commit message**, scope 필수
-5. **untracked 파일 보호** — 명시 스테이징만, `git add .` 금지
-6. **파괴적 git 명령 사용자 확인 후** — `reset --hard`, `push --force`, `branch -D` 등
-7. **검증 팀은 병렬 실행** — 순차 실행 금지 (토큰 낭비 + 지연)
-8. **WebSearch는 반드시 현재 연도 포함** — 구 정보 회귀 방지
-9. **자동 머지 금지** — 사용자 명시 승인 후에만
-10. **재귀 3회째는 escalate** — 무한 루프 방지
-
----
-
-## 6. 권장 관행
-
-- 태스크 ID 순서 = 의존 순서
-- 1 PR = 1 Unit of Work (태스크 단위 PR 금지)
-- 같은 작업이 여러 저장소에 걸치면 **각 저장소에 동일 이름 브랜치 + 각 저장소 PR 독립 생성**
-- 검증 팀 출력은 **재귀적으로 신뢰**하되 2회 초과 시 사용자 개입
-- 큰 태스크는 executor 스폰, 작은 태스크는 직접 구현
-- 방어적 표기 선호 (`@Immutable`, `updatable=false`, `final`, `readonly` 등)
-- 커밋 메시지는 WHY 먼저, WHAT 나중. 1차 줄은 50자 내외.
+1. **No Claude fingerprint** — anywhere: commits, PRs, docs
+2. **No local build commands** (`./gradlew build`, `npm run build`, `pnpm build`, etc.) — user verifies
+3. **No branch prefixes** — `feat/`, `fix/`, `chore/`, etc.
+4. **Korean commit messages**, scope is required
+5. **Protect untracked files** — explicit staging only, `git add .` is forbidden
+6. **Destructive git commands require user confirmation** — `reset --hard`, `push --force`, `branch -D`, etc.
+7. **Verification team runs in parallel** — sequential is forbidden (token waste + latency)
+8. **Implementation parallel groups MUST be followed by head re-verification** — never trust merged parallel output blindly
+9. **WebSearch queries MUST include the current year** — prevents stale-info regression
+10. **No auto-merge** — only after explicit user approval
+11. **3rd recursion round = escalate** — prevents infinite loops
 
 ---
 
-## 7. 다른 스킬과의 관계
+## 6. Recommended Practices
 
-| 스킬 | 관계 |
+- Task ID order = dependency order
+- 1 PR = 1 Unit of Work (no per-task PRs)
+- When the same work spans multiple repos: **same branch name in each repo + an independent PR per repo**
+- Trust verification team output **recursively**, but escalate past 2 rounds
+- Big tasks → spawn executor; tiny tasks → implement directly
+- Maximize parallel groups when possible, but err on the sequential side when in doubt
+- Prefer defensive declarations (`@Immutable`, `updatable=false`, `final`, `readonly`, etc.)
+- Commit messages: WHY first, WHAT later. Keep the first line ~50 chars.
+
+---
+
+## 7. Relationship with Other Skills
+
+| Skill | Relationship |
 |---|---|
-| `git-master` | Task Loop의 **커밋/브랜치/PR 단계**에서 호출. 규칙 일치 |
-| `design-first` | Task Loop **진입 전** 복잡한 설계가 필요할 때 선행. Task Loop가 실행 단계를 담당 |
-| `simplify` / `audit` / `polish` | Task Loop **내부 검증 단계**에서 추가 검증 레이어로 호출 가능 |
-| `find-skills` | Task Loop 실행 중 특정 문제에 맞는 보조 스킬 탐색용 |
+| `git-master` | Called during Task Loop's **commit / branch / PR steps**. Rules align. |
+| `design-first` | Runs **before** Task Loop when complex design is needed. Task Loop owns the execution phase. |
+| `simplify` / `audit` / `polish` | Can be invoked **inside Task Loop's verification phase** as additional review layers. |
+| `find-skills` | Discovers auxiliary skills for specific problems encountered mid-loop. |
 
 ---
 
-## 8. 체크리스트 (Unit of Work 1회 수명주기)
+## 8. Checklist (one Unit of Work lifecycle)
 
 ```
-▢ 이전 작업의 완료 상태 확인
-▢ main 최신화 (git pull --ff-only)
-▢ 브랜치 생성 (prefix 없음, 설명형)
-▢ TaskList 생성 (구현 + 검증 + (잠재적) 수정)
-▢ 각 Task 루프:
-   ▢ in_progress 마킹
-   ▢ 구현 (Read → Edit/Write)
-   ▢ git-master 커밋 (Korean, scope 필수, fingerprint 금지)
-   ▢ completed 마킹
-▢ 검증 팀 병렬 실행 (code-reviewer + architect + WebSearch 현재 연도)
-▢ 이슈 있으면:
+▢ Confirm prior work's Done state
+▢ Bring main up to date (git pull --ff-only)
+▢ Create branch (no prefix, descriptive)
+▢ Build TaskList (implementation + verification + potential fixes)
+▢ Dependency analysis → identify parallel groups
+▢ For each Task / group:
+   ▢ Mark in_progress
+   ▢ Implement
+     - Sequential: Read → Edit/Write
+     - Parallel group: spawn N executors in one message
+   ▢ (Parallel group only) Head re-verification across modified files
+   ▢ git-master commit (Korean, scope required, no fingerprint)
+   ▢ Mark completed
+▢ Run verification team in parallel (code-reviewer + architect + WebSearch with current year)
+▢ If issues exist:
    ▢ [FIX] TaskCreate
-   ▢ 수정 + 커밋
-   ▢ 경량 재검증
-   ▢ (재귀, 최대 2회)
-▢ PR 생성 (gh pr create)
-▢ 사용자 승인 대기
-▢ 승인 시: gh pr merge --merge --delete-branch
-▢ 회고/요약 응답 작성
+   ▢ Fix + commit
+   ▢ Lightweight re-verify
+   ▢ (Recurse, max 2 rounds)
+▢ Create PR (gh pr create)
+▢ Wait for user approval
+▢ On approval: gh pr merge --merge --delete-branch
+▢ Write retrospective / summary
 ```
