@@ -83,6 +83,14 @@
             "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && SUPERSET_AGENT_ID=claude \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/hyunoo/.claude/hooks/context-mode-cache-heal.mjs\""
+          }
+        ]
       }
     ],
     "SessionEnd": [
@@ -111,7 +119,8 @@
     "claude-md-management@claude-plugins-official": true,
     "rust-analyzer-lsp@claude-plugins-official": true,
     "atlassian@claude-plugins-official": true,
-    "vercel@claude-plugins-official": true
+    "vercel@claude-plugins-official": true,
+    "context-mode@context-mode": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -119,12 +128,18 @@
         "source": "github",
         "repo": "pbakaus/impeccable"
       }
+    },
+    "context-mode": {
+      "source": {
+        "source": "github",
+        "repo": "mksglu/context-mode"
+      }
     }
   },
   "language": "Korean, 한국어",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "skipDangerousModePermissionPrompt": true,
-  "skipAutoPermissionPrompt": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }

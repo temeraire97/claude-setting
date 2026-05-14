@@ -139,6 +139,19 @@
         "installedAt": "2026-04-20T04:39:34.878Z",
         "lastUpdated": "2026-04-20T04:39:34.878Z"
       }
+    ],
+    "context-mode@context-mode": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/context-mode/context-mode/1.0.131",
+        "version": "1.0.131",
+        "installedAt": "2026-05-14T05:22:22.529Z",
+        "lastUpdated": "2026-05-14T05:25:42.367Z",
+        "gitCommitSha": "17587f6f64604cb856b160e10ed1745ba322a9a0"
+      }
     ]
+  },
+  "enabledPlugins": {
+    "context-mode@context-mode": true
   }
 }

@@ -26,3 +26,6 @@ Check `packageManager` field in `package.json` to determine the project's packag
 
 Git/커밋 작업 시 `~/.claude/skills/git-master/` 규칙을 **반드시** 따를 것.
 Frontend 작업 시 `~/.claude/skills/my-frontend/` 가이드라인을 참고할 것.
+# graphify
+- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
+When the user types `/graphify`, invoke the Skill tool with `skill: "graphify"` before doing anything else.
