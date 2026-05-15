@@ -259,6 +259,16 @@ gh pr merge {N} --merge --delete-branch
 
 **Warning**: only merge **after explicit user approval**. Auto-merge is forbidden. Only run it when the user issues an explicit command like `/git-master merge`.
 
+### Step 10. Refresh knowledge graph
+
+```bash
+git checkout main
+git pull --ff-only
+graphify update .
+```
+
+Aligns with the project-level CLAUDE.md rule: "After modifying code, run `graphify update .` to keep the graph current". AST-only, no API cost. A stale graph causes future analyses (god nodes, communities, isolated/island detection) to mislead — run this **every time** a Unit of Work merges, even for tiny PRs. If `graphify` reports "No code-graph topology changes detected", that is expected for pure-deletion / style-only PRs and counts as success.
+
 ---
 
 ## 5. Invariants (Never Violate)
@@ -274,6 +284,7 @@ gh pr merge {N} --merge --delete-branch
 9. **WebSearch queries MUST include the current year** — prevents stale-info regression
 10. **No auto-merge** — only after explicit user approval
 11. **3rd recursion round = escalate** — prevents infinite loops
+12. **graphify update after every merge** — once a Unit of Work merges to main, run `graphify update .` (AST-only, no API cost). Skipping this leaves the knowledge graph stale and causes future island/community-based analyses to misjudge dead code or migration leftovers.
 
 ---
 
@@ -326,5 +337,6 @@ gh pr merge {N} --merge --delete-branch
 ▢ Create PR (gh pr create)
 ▢ Wait for user approval
 ▢ On approval: gh pr merge --merge --delete-branch
+▢ Refresh knowledge graph (git checkout main && git pull && graphify update .)
 ▢ Write retrospective / summary
 ```

@@ -257,3 +257,9 @@ After doing this, you may fix the identity used for this commit with:
  3 files changed, 219 insertions(+), 161 deletions(-)
 [main 9b0a41d] chore(claude): auto-sync 2026-05-13 19:00
  3 files changed, 30 insertions(+), 7 deletions(-)
+[main 122a0d8] chore(claude): auto-sync 2026-05-14 19:00
+ 9 files changed, 1232 insertions(+), 8 deletions(-)
+ create mode 100644 skills/graphify/.graphify_version
+ create mode 100644 skills/graphify/SKILL.md
+ create mode 100644 skills/grill-me/SKILL.md
+ create mode 100644 skills/reset-openvpn-connect/SKILL.md
