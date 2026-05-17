@@ -265,3 +265,5 @@ After doing this, you may fix the identity used for this commit with:
  create mode 100644 skills/reset-openvpn-connect/SKILL.md
 [main ce95edd] chore(claude): auto-sync 2026-05-15 19:17
  3 files changed, 20 insertions(+), 5 deletions(-)
+[main 05e7ed4] chore(claude): auto-sync 2026-05-16 19:13
+ 2 files changed, 4 insertions(+), 2 deletions(-)
