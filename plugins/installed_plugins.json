@@ -143,11 +143,20 @@
     "context-mode@context-mode": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/context-mode/context-mode/1.0.131",
-        "version": "1.0.131",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/context-mode/context-mode/1.0.136",
+        "version": "1.0.136",
         "installedAt": "2026-05-14T05:22:22.529Z",
-        "lastUpdated": "2026-05-14T05:25:42.367Z",
+        "lastUpdated": "2026-05-18T02:34:59.131Z",
         "gitCommitSha": "17587f6f64604cb856b160e10ed1745ba322a9a0"
+      }
+    ],
+    "lua-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/lua-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-05-18T00:41:54.196Z",
+        "lastUpdated": "2026-05-18T00:41:54.196Z"
       }
     ]
   },

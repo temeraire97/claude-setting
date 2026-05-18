@@ -105,8 +105,9 @@ git checkout -b {descriptive-name}
 
 ```
 TaskCreate × N
-  - subject: imperative ("Add X", "Refactor Y")
+  - subject: imperative ("Add X", "Refactor Y"); prefix "[TDD] " for test-worthy tasks
   - description: file paths + acceptance criteria + dependency notes
+              ([TDD] tasks: inherit the issue's Acceptance criteria verbatim as the seed behavior list)
   - The final task MUST be "Verification team review"
 ```
 
@@ -116,6 +117,9 @@ TaskCreate × N
 - Task IDs reflect **dependency order**, not creation order
 - Always include the verification task as a separate item
 - **Mark dependencies explicitly** so the head agent can identify parallelizable groups
+- **Mark test-worthy tasks `[TDD]`** — tag a task `[TDD]` when an upstream source (`to-prd`'s *Testing Decisions*, or the issue's *Acceptance criteria*) designates its module for testing. If no upstream source exists, the head agent confirms the `[TDD]` set with the user **here, at Step 3** — never later, never inside a parallel executor.
+- **Never split test-writing into its own task.** A `[TDD]` task carries its tests AND implementation together. Separating "write tests" from "write code" is horizontal slicing — explicitly forbidden by the `tdd` skill.
+- **`[TDD]` task → N commits** (one per green cycle) — the sole exception to "1 Task = 1 Commit". Each green is exactly the "smallest logically separable unit" the commit rule already requires.
 
 ### Step 3.5. Dependency analysis & parallelization
 
@@ -145,9 +149,14 @@ T1 (sequential, scaffolds the module)
 
 ```
 1. TaskUpdate(in_progress)
-2. Implement (Edit/Write)
-   - Read or Grep dependent files first
-   - Follow existing patterns/conventions (no novel inventions)
+2. Implement
+   - Non-[TDD] task → Edit/Write directly.
+       Read or Grep dependent files first; follow existing patterns (no novel inventions).
+   - [TDD] task → drive implementation with the `tdd` skill, §2-4 ONLY
+       (Tracer Bullet → Incremental Loop → Refactor). One test → one impl, repeat.
+       SKIP tdd §1 Planning — the plan is INHERITED, not re-planned: the issue's
+       Acceptance criteria are the seed behavior list; tdd §2-4 grows finer
+       behaviors inside the loop. Commit once per green (see Step 3).
 3. Skill(git-master) commit OR direct git add + git commit
    - Korean conventional commit (type(scope): message)
    - scope is required
@@ -159,18 +168,31 @@ T1 (sequential, scaffolds the module)
 
 ```
 1. TaskUpdate(in_progress) on every member task
-2. Spawn N executor agents in a SINGLE message (parallel tool calls)
-   - Each executor gets: its task spec, files it owns, files it must not touch,
-     and the shared conventions it must follow
-3. Wait for all executors to finish
+2. Spawn N agents in a SINGLE message (parallel tool calls)
+   - Non-[TDD] task → `executor` agent. Spec: task, files it owns,
+     files it must not touch, shared conventions. It does NOT commit;
+     the head commits in step 5.
+   - [TDD] task → `tdd-executor` agent with isolation: "worktree".
+     Spec: task + the inherited Acceptance criteria (seed behavior list).
+     It runs Skill(tdd) itself, applies §2-4, and commits once per green
+     INSIDE its own worktree — no index contention with siblings.
+3. Wait for all agents to finish.
+   - If a tdd-executor reports it could NOT reach green: do NOT merge its
+     worktree, do NOT mark its task completed. Isolate that task, let the
+     rest proceed, and escalate the failing test to the user. A red state
+     is never committed or merged.
 4. Head agent re-verification pass:
    - Read every file that was modified
    - Check: naming consistency across files, shared types/interfaces match,
      duplicate logic, conflicting assumptions, dangling imports, ABI/contract drift
    - If drift found: fix directly (small) OR add an inline [FIX] task (large)
-5. Commit per task via git-master
-   - If executors made interleaved edits, split into logical commits — do NOT lump
-6. TaskUpdate(completed) on every member task
+5. Land the work:
+   - Non-[TDD] tasks → head commits per task via git-master.
+     If executors made interleaved edits, split into logical commits — do NOT lump.
+   - [TDD] tasks → head merges each tdd-executor worktree back onto the UoW
+     branch. Parallel-group rule guarantees no file overlap, so merges are
+     conflict-free; the per-green commits ride along intact.
+6. TaskUpdate(completed) on every member task that succeeded
 ```
 
 The head re-verification step is non-negotiable for parallel groups. Parallel agents don't see each other's work; the head is the only place inconsistencies get caught before the verification team sees them.
@@ -191,6 +213,8 @@ Agent(code-reviewer)      → code quality, bugs, security, conventions
 Agent(architect-medium)   → design coherence, plan alignment, architectural health
 WebSearch({query} 2026)   → industry best practices (current year MANDATORY)
 ```
+
+**If the Unit of Work contains `[TDD]` tasks**, extend the `code-reviewer` brief with two checks: (1) tests verify observable behavior, not implementation details; (2) `git log` shows an incremental test↔impl cadence — not a bulk test-dump (horizontal slicing).
 
 **Adjust depth by complexity**:
 - Simple change: `code-reviewer-low` + WebSearch only
@@ -213,7 +237,9 @@ If any BLOCK exists → Step 7. Otherwise → Step 8.
 
 ```
 1. TaskCreate one [FIX] task per issue
-   - subject prefix: "[FIX] "
+   - subject prefix: "[FIX] " — also tag "[TDD]" if the fix targets a behavioral
+     bug in a [TDD] module (write the failing regression test first, then fix).
+     Non-behavioral fixes (typo, import, config, lint) stay plain.
    - description: root cause + scope + file:line
 2. Implementation loop (repeat Step 4)
 3. Lightweight re-verify (code-reviewer-low alone, skip WebSearch)
@@ -285,6 +311,7 @@ Aligns with the project-level CLAUDE.md rule: "After modifying code, run `graphi
 10. **No auto-merge** — only after explicit user approval
 11. **3rd recursion round = escalate** — prevents infinite loops
 12. **graphify update after every merge** — once a Unit of Work merges to main, run `graphify update .` (AST-only, no API cost). Skipping this leaves the knowledge graph stale and causes future island/community-based analyses to misjudge dead code or migration leftovers.
+13. **`[TDD]` tasks are implemented test-first via the `tdd` skill** — red-green-refactor, §2-4 only, one test at a time, one commit per green. tdd §1 Planning is INHERITED from upstream (`to-prd` Testing Decisions / `to-issues` Acceptance criteria), never re-run inside Task Loop. Parallel `[TDD]` tasks run in `tdd-executor` agents under worktree isolation. Splitting test-writing into a separate task (horizontal slicing) is forbidden. A red (failing) state is never committed.
 
 ---
 
@@ -306,6 +333,9 @@ Aligns with the project-level CLAUDE.md rule: "After modifying code, run `graphi
 | Skill | Relationship |
 |---|---|
 | `git-master` | Called during Task Loop's **commit / branch / PR steps**. Rules align. |
+| `tdd` | Task Loop **uses** it as the implementation discipline for `[TDD]` tasks in Step 4 — red-green-refactor (§2-4) only. Planning (§1) is inherited from upstream (`to-prd` / `to-issues`). SRP: Task Loop owns orchestration, `tdd` owns the test-first loop. |
+| `tdd-executor` | The agent Task Loop spawns for **parallel** `[TDD]` tasks (Step 4b). Has the `Skill` tool, so it loads `tdd` itself inside a worktree-isolated context and commits per green. |
+| `to-prd` / `to-issues` | Run **before** Task Loop. They produce the PRD and the per-issue Acceptance criteria that `[TDD]` tasks inherit as their seed behavior list. |
 | `design-first` | Runs **before** Task Loop when complex design is needed. Task Loop owns the execution phase. |
 | `simplify` / `audit` / `polish` | Can be invoked **inside Task Loop's verification phase** as additional review layers. |
 | `find-skills` | Discovers auxiliary skills for specific problems encountered mid-loop. |
