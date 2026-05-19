@@ -39,7 +39,7 @@ Git 커밋, 브랜치, PR 관련 사용자 커스텀 규칙입니다.
 | 저장소 | PR 생성 | Merge 방식 | CLI |
 |--------|---------|------------|-----|
 | **GitHub** | `gh pr create` | **3-way merge (`--merge`)** | `gh` |
-| **CodeCommit** | `aws codecommit` | **로컬 merge 필수** (author 문제) | `aws` |
+| **CodeCommit** | `aws codecommit` | **CLI 3-way merge** (`merge-pull-request-by-three-way`) | `aws` |
 
 ---
 
@@ -63,9 +63,11 @@ git branch -d <branch-name>
 
 ### CodeCommit 프로젝트
 
-**CodeCommit은 로컬 merge 필수** - CLI merge는 AWS IAM 사용자로 커밋됨:
+**CodeCommit은 `aws codecommit` CLI로 PR 생성·merge** 한다:
 - `gh` CLI 대신 `aws codecommit` CLI 사용
-- **Merge는 반드시 로컬에서 `AaronYun <hyensooyoon@gmail.com>` author로 수행** (CLI merge 금지)
+- Merge는 `aws codecommit merge-pull-request-by-three-way` (CLI 3-way merge) 사용
+- CLI merge 시 머지 커밋 author는 AWS IAM 사용자(`devops`)로 남으며, 이는 repo의 기존 관행과 일치한다
+- 머지 커밋 author를 개인 계정으로 남기고 싶을 때만 아래 "Local Merge with Custom Author" 옵션을 선택적으로 사용
 
 ### ⚠️ CodeCommit AWS Profile (CRITICAL)
 
@@ -187,9 +189,9 @@ aws codecommit merge-pull-request-by-three-way \
 
 ---
 
-## Local Merge with Custom Author (REQUIRED for CodeCommit)
+## Local Merge with Custom Author (CodeCommit 선택 옵션)
 
-⚠️ **CodeCommit CLI merge는 AWS IAM 사용자로 커밋됩니다. 항상 로컬 merge를 사용할 것:**
+기본은 CLI merge다. **머지 커밋 author를 AWS IAM(`devops`)이 아닌 개인 계정으로 남기고 싶을 때만** 아래 로컬 merge를 사용한다:
 
 ```bash
 # 1. PR 생성 (기록용 - 위와 동일)

@@ -83,10 +83,10 @@
     "figma@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/2.1.30",
-        "version": "2.1.30",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/2.2.12",
+        "version": "2.2.12",
         "installedAt": "2026-02-06T07:39:37.782Z",
-        "lastUpdated": "2026-04-30T00:17:37.008Z",
+        "lastUpdated": "2026-05-19T00:22:10.003Z",
         "gitCommitSha": "20aca44ee6ba6092037e943c151c067896828360"
       }
     ],
@@ -123,10 +123,10 @@
     "vercel@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/vercel/0.42.1",
-        "version": "0.42.1",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/vercel/0.43.0",
+        "version": "0.43.0",
         "installedAt": "2026-04-01T07:51:45.059Z",
-        "lastUpdated": "2026-05-07T07:08:06.712Z",
+        "lastUpdated": "2026-05-19T00:22:10.925Z",
         "gitCommitSha": "7807a6aabad5bbb118d989252cade51313efb0e4"
       }
     ],
@@ -143,11 +143,11 @@
     "context-mode@context-mode": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/context-mode/context-mode/1.0.136",
-        "version": "1.0.136",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/context-mode/context-mode/1.0.140",
+        "version": "1.0.140",
         "installedAt": "2026-05-14T05:22:22.529Z",
-        "lastUpdated": "2026-05-18T02:34:59.131Z",
-        "gitCommitSha": "17587f6f64604cb856b160e10ed1745ba322a9a0"
+        "lastUpdated": "2026-05-19T00:30:29.735Z",
+        "gitCommitSha": "0c838a3dea3f85010557718e38b8301d2782fc00"
       }
     ],
     "lua-lsp@claude-plugins-official": [

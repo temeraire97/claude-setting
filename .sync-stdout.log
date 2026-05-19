@@ -269,3 +269,19 @@ After doing this, you may fix the identity used for this commit with:
  2 files changed, 4 insertions(+), 2 deletions(-)
 [main 903dec9] chore(claude): auto-sync 2026-05-17 19:14
  2 files changed, 4 insertions(+), 2 deletions(-)
+[main 170838e] chore(claude): auto-sync 2026-05-18 19:00
+ 19 files changed, 776 insertions(+), 19 deletions(-)
+ create mode 100644 skills/setup-matt-pocock-skills/SKILL.md
+ create mode 100644 skills/setup-matt-pocock-skills/domain.md
+ create mode 100644 skills/setup-matt-pocock-skills/issue-tracker-github.md
+ create mode 100644 skills/setup-matt-pocock-skills/issue-tracker-gitlab.md
+ create mode 100644 skills/setup-matt-pocock-skills/issue-tracker-local.md
+ create mode 100644 skills/setup-matt-pocock-skills/triage-labels.md
+ create mode 100644 skills/tdd/SKILL.md
+ create mode 100644 skills/tdd/deep-modules.md
+ create mode 100644 skills/tdd/interface-design.md
+ create mode 100644 skills/tdd/mocking.md
+ create mode 100644 skills/tdd/refactoring.md
+ create mode 100644 skills/tdd/tests.md
+ create mode 100644 skills/to-issues/SKILL.md
+ create mode 100644 skills/to-prd/SKILL.md
