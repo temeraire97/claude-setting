@@ -287,3 +287,5 @@ After doing this, you may fix the identity used for this commit with:
  create mode 100644 skills/to-prd/SKILL.md
 [main 7b0051d] chore(claude): auto-sync 2026-05-19 19:00
  4 files changed, 36 insertions(+), 19 deletions(-)
+[main a835ce7] chore(claude): auto-sync 2026-05-20 19:00
+ 2 files changed, 4 insertions(+), 3 deletions(-)
