@@ -19,6 +19,7 @@ claude/
 │   └── known_marketplaces.json # 마켓플레이스 목록
 ├── install.sh                  # 복원 스크립트
 ├── sync.sh                     # 백업 스크립트
+├── .gitignore                  # 시크릿·로그 차단 패턴
 └── com.user.claude-sync.plist  # macOS launchd 설정
 ```
 
@@ -45,6 +46,9 @@ cd ~/dotfiles/claude
 
 매일 19:00에 `sync.sh`가 자동 실행되어 변경분을 커밋·푸시한다.
 `install.sh`가 launchd 등록까지 처리하므로 별도 설정은 불필요하다.
+
+커밋 전 `gitleaks`로 시크릿을 스캔하며(설치 시), 누출 감지나 푸시 실패 시
+macOS 알림을 띄운다. 실패한 푸시는 다음 실행에서 자동 재시도된다.
 
 ```bash
 # 상태 확인
