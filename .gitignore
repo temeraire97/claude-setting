@@ -1,0 +1,15 @@
+# --- Claude Code dotfiles — ignore list ---
+
+# Runtime logs (written by sync.sh / launchd; not configuration)
+*.log
+
+# macOS noise
+.DS_Store
+
+# Secret-prone files — must never reach this public repo
+*.local.json
+.env
+.env.*
+*credentials*
+*.secret
+/mcp.json

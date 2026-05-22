@@ -7,7 +7,7 @@
 # Existing real files/directories are preserved as *.backup
 # Usage: ./install.sh
 
-set -e
+set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="$HOME/.claude"
@@ -27,7 +27,8 @@ link_file() {
         return 0
     fi
     if [ -e "$dest" ] && [ ! -L "$dest" ]; then
-        local backup="$dest.backup.$(date +%Y%m%d-%H%M%S)"
+        local backup
+        backup="$dest.backup.$(date +%Y%m%d-%H%M%S)"
         if ! mv "$dest" "$backup"; then
             echo "  ⚠ 기존 파일 백업 실패 — 건너뜀: $dest"
             return 0
@@ -50,7 +51,8 @@ link_dir() {
         return 0
     fi
     if [ -e "$dest" ] && [ ! -L "$dest" ]; then
-        local backup="$dest.backup.$(date +%Y%m%d-%H%M%S)"
+        local backup
+        backup="$dest.backup.$(date +%Y%m%d-%H%M%S)"
         if ! mv "$dest" "$backup"; then
             echo "  ⚠ 기존 디렉토리 백업 실패 — 건너뜀: $dest"
             return 0
@@ -141,7 +143,7 @@ else
                     ok=$((ok + 1))
                 else
                     echo "  ✗ 실패: $plugin"
-                    echo "$out" | tail -2 | sed 's/^/        /'
+                    echo "$out" | tail -2 | sed 's/^/        /' || true
                     fail=$((fail + 1))
                 fi
             done <<< "$plugins"
