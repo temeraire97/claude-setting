@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(zip:*)",
+      "Bash(pandoc:*)",
+      "Bash(fc-list:*)",
+      "WebSearch",
+      "WebFetch(domain:www.chinalawtranslate.com)",
+      "WebFetch(domain:www.whitecase.com)",
+      "WebFetch(domain:www.chinafy.com)",
+      "WebFetch(domain:www.mlytics.com)"
+    ]
+  }
+}
