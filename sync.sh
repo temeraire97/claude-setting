@@ -47,14 +47,15 @@ sync_dir() {
 # Sync files
 sync_file "$CLAUDE_DIR/CLAUDE.md" "$SCRIPT_DIR/CLAUDE.md"
 sync_file "$CLAUDE_DIR/settings.json" "$SCRIPT_DIR/settings.json"
-sync_file "$CLAUDE_DIR/settings.local.json" "$SCRIPT_DIR/settings.local.json"
 sync_file "$CLAUDE_DIR/statusline-wrapper.sh" "$SCRIPT_DIR/statusline-wrapper.sh"
 sync_file "$CLAUDE_DIR/plugins/installed_plugins.json" "$SCRIPT_DIR/plugins/installed_plugins.json"
+sync_file "$CLAUDE_DIR/plugins/known_marketplaces.json" "$SCRIPT_DIR/plugins/known_marketplaces.json"
 
 # Sync directories
 sync_dir "$CLAUDE_DIR/skills" "$SCRIPT_DIR/skills"
 sync_dir "$CLAUDE_DIR/agents" "$SCRIPT_DIR/agents"
 sync_dir "$CLAUDE_DIR/hooks" "$SCRIPT_DIR/hooks"
+sync_dir "$CLAUDE_DIR/commands" "$SCRIPT_DIR/commands"
 
 # Git commit if in a git repo and there are changes
 cd "$SCRIPT_DIR"
