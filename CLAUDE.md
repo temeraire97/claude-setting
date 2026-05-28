@@ -2,18 +2,18 @@
 
 ## Build Commands
 
-**DO NOT run `pnpm build`, `npm run build`, or any production build commands during development.**
+**NEVER run `pnpm build`, `npm run build`, or any production build during dev.**
 
-This is NOT optional. The user will verify changes manually. Running build commands:
-- Wastes time (builds take forever)
-- Pollutes the terminal with unnecessary output
-- Is NOT your job - the user decides when to build
+Not optional. User verify manually. Build commands:
+- Waste time (builds slow)
+- Pollute terminal
+- Not your job — user decide when build
 
-**ONLY use `pnpm dev` or type-checking commands if explicitly requested.**
+**ONLY use `pnpm dev` or type-check commands if explicitly asked.**
 
 ## Package Manager Rules
 
-Check `packageManager` field in `package.json` to determine the project's package manager, then use the appropriate command:
+Check `packageManager` field in `package.json` for project's package manager, then use matching command:
 
 | Package Manager | Run installed package | Run one-off package |
 |-----------------|----------------------|---------------------|
@@ -24,8 +24,8 @@ Check `packageManager` field in `package.json` to determine the project's packag
 
 ## Custom Skills
 
-Git/커밋 작업 시 `~/.claude/skills/git-master/` 규칙을 **반드시** 따를 것.
-Frontend 작업 시 `~/.claude/skills/my-frontend/` 가이드라인을 참고할 것.
+Git/커밋 작업 시 `~/.claude/skills/git-master/` 규칙 **반드시** 따를 것.
+Frontend 작업 시 `~/.claude/skills/my-frontend/` 가이드라인 참고할 것.
 # graphify
-- **graphify** (`~/.claude/skills/graphify/SKILL.md`) - any input to knowledge graph. Trigger: `/graphify`
-When the user types `/graphify`, invoke the Skill tool with `skill: "graphify"` before doing anything else.
+- **graphify** (`~/.claude/skills/graphify/SKILL.md`) — any input to knowledge graph. Trigger: `/graphify`
+User types `/graphify` → invoke Skill tool with `skill: "graphify"` before anything else.

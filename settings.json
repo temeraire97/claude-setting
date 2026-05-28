@@ -30,6 +30,16 @@
             "command": "[ -n \"$SUPERSET_HOME_DIR\" ] && [ -x \"$SUPERSET_HOME_DIR/hooks/notify.sh\" ] && SUPERSET_AGENT_ID=claude \"$SUPERSET_HOME_DIR/hooks/notify.sh\" || true"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/hyunoo/.local/share/fnm/node-versions/v24.15.0/installation/bin/node\" \"/Users/hyunoo/.claude/hooks/caveman-mode-tracker.js\"",
+            "timeout": 5,
+            "statusMessage": "Tracking caveman mode..."
+          }
+        ]
       }
     ],
     "Stop": [
@@ -91,6 +101,16 @@
             "command": "\"/Users/hyunoo/.claude/hooks/context-mode-cache-heal.mjs\""
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/hyunoo/.local/share/fnm/node-versions/v24.15.0/installation/bin/node\" \"/Users/hyunoo/.claude/hooks/caveman-activate.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading caveman mode..."
+          }
+        ]
       }
     ],
     "SessionEnd": [
@@ -121,7 +141,9 @@
     "atlassian@claude-plugins-official": true,
     "vercel@claude-plugins-official": true,
     "context-mode@context-mode": true,
-    "lua-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": true,
+    "caveman@caveman": true,
+    "impeccable@impeccable": true
   },
   "extraKnownMarketplaces": {
     "impeccable": {
@@ -134,6 +156,12 @@
       "source": {
         "source": "github",
         "repo": "mksglu/context-mode"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
       }
     }
   },
