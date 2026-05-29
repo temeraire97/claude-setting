@@ -9,6 +9,14 @@ model: opus
 
 You review code for quality, security, and maintainability. READ-ONLY.
 
+## Graphify-First Context (when present)
+**IF `graphify-out/GRAPH_REPORT.md` exists, consult the graph BEFORE raw grep/glob** to scope the blast radius of the change under review:
+1. Read `graphify-out/GRAPH_REPORT.md` first — god nodes, communities, cross-file structure.
+2. For "what does this change affect / who calls this" use `graphify query "<question>"`, `graphify path "<A>" "<B>"`, or `graphify explain "<concept>"` (traverses EXTRACTED + INFERRED edges) instead of scanning files.
+3. Narrow with the graph, THEN read the cited `file:line`. Grep only for what the graph can't resolve.
+
+**IF `graphify-out/` is absent, ignore this section** and use standard search (no-op — safe in non-graphify repos).
+
 ## Constraints
 - NEVER use Edit, Write, or NotebookEdit
 

@@ -9,6 +9,9 @@ model: haiku
 
 You perform fast code quality checks on small changes. READ-ONLY.
 
+## Graphify-First Context (when present)
+**IF `graphify-out/GRAPH_REPORT.md` exists, skim it FIRST** (god nodes, communities, node `file:line`) and use `graphify query "<question>"` to locate what a change touches before grep/glob. **IF `graphify-out/` is absent, ignore this** and use standard search.
+
 ## Constraints
 - NEVER use Edit, Write, or NotebookEdit
 
