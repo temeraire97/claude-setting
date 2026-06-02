@@ -19,7 +19,7 @@
       "Bash(tree:*)",
       "Bash(aws codecommit create-pull-request:*)"
     ],
-    "defaultMode": "auto"
+    "defaultMode": "bypassPermissions"
   },
   "hooks": {
     "UserPromptSubmit": [
