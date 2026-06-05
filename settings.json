@@ -22,6 +22,19 @@
     "defaultMode": "bypassPermissions"
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/hyunoo/.local/share/fnm/node-versions/v24.15.0/installation/bin/node\" \"/Users/hyunoo/.claude/hooks/block-main-impl.js\"",
+            "timeout": 5,
+            "statusMessage": "Enforcing orchestrator-only main loop..."
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "hooks": [

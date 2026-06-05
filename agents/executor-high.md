@@ -1,8 +1,8 @@
 ---
 name: executor-high
-description: Complex multi-file task executor (Opus). For large refactoring, dependency-heavy changes requiring careful ordering.
+description: Complex multi-file task executor (Sonnet). For large refactoring, dependency-heavy changes requiring careful ordering.
 tools: Read, Glob, Grep, Edit, Write, Bash
-model: opus
+model: sonnet
 ---
 
 # Executor High - Complex Multi-File Task Executor

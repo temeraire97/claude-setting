@@ -64,15 +64,15 @@ Apply Task Loop if **any** of the following hold:
 
 | Team | Members | When deployed | Output |
 |---|---|---|---|
-| **Implementation Team (sequential)** | `executor` agent OR main agent directly | Each dependent task | Code + commit |
+| **Implementation Team (sequential)** | `executor` agent (Sonnet) | Each dependent task | Code + commit |
 | **Implementation Team (parallel)** | Multiple `executor` agents in one message | Group of independent tasks | Code from N agents, merged |
 | **Head Re-verification** | Main agent | After every parallel group | Cross-file consistency report, drift fix list |
 | **Verification Team** | `code-reviewer` + `architect-medium` + `WebSearch`, parallel | After all tasks complete | Issue report (OK/WARN/BLOCK) |
 | **Lightweight Re-verify** | `code-reviewer-low` alone | After each `[FIX]` commit | Pass/fail verdict |
 
 **Principles**:
-- Tiny tasks (one-line config, adding an annotation) → main agent implements directly. Spawning an executor costs more than the work.
-- Complex tasks (composite logic, multi-file, reactive/async chains) → MUST spawn executor.
+- All implementation — even one-line config or a single annotation — is delegated to a Sonnet `executor`. The main loop NEVER calls Edit/Write itself (enforced by the `block-main-impl` hook + the Model Routing rule in CLAUDE.md).
+- Agent choice: simple/bounded tasks → `executor`; composite-logic / multi-file / reactive-async chains → `executor-high` (both Sonnet). 1-2 file mechanical tweaks → `cavecrew-builder`.
 - The verification team **MUST run in parallel** — multiple Agent calls in a single message.
 
 ---
@@ -150,8 +150,9 @@ T1 (sequential, scaffolds the module)
 ```
 1. TaskUpdate(in_progress)
 2. Implement
-   - Non-[TDD] task → Edit/Write directly.
-       Read or Grep dependent files first; follow existing patterns (no novel inventions).
+   - Non-[TDD] task → spawn a Sonnet `executor` (it owns the Edit/Write).
+       Brief it to Read/Grep dependent files first and follow existing patterns
+       (no novel inventions). The main loop specs the task, then reviews + commits.
    - [TDD] task → drive implementation with the `tdd` skill, §2-4 ONLY
        (Tracer Bullet → Incremental Loop → Refactor). One test → one impl, repeat.
        SKIP tdd §1 Planning — the plan is INHERITED, not re-planned: the issue's
@@ -185,7 +186,7 @@ T1 (sequential, scaffolds the module)
    - Read every file that was modified
    - Check: naming consistency across files, shared types/interfaces match,
      duplicate logic, conflicting assumptions, dangling imports, ABI/contract drift
-   - If drift found: fix directly (small) OR add an inline [FIX] task (large)
+   - If drift found: spawn an `executor` to fix it (small) OR add an inline [FIX] task (large) — never patch it inline from the main loop
 5. Land the work:
    - Non-[TDD] tasks → head commits per task via git-master.
      If executors made interleaved edits, split into logical commits — do NOT lump.
@@ -321,7 +322,7 @@ Aligns with the project-level CLAUDE.md rule: "After modifying code, run `graphi
 - 1 PR = 1 Unit of Work (no per-task PRs)
 - When the same work spans multiple repos: **same branch name in each repo + an independent PR per repo**
 - Trust verification team output **recursively**, but escalate past 2 rounds
-- Big tasks → spawn executor; tiny tasks → implement directly
+- Every task → spawn an executor (Sonnet); the main loop orchestrates and never edits files directly
 - Maximize parallel groups when possible, but err on the sequential side when in doubt
 - Prefer defensive declarations (`@Immutable`, `updatable=false`, `final`, `readonly`, etc.)
 - Commit messages: WHY first, WHAT later. Keep the first line ~50 chars.
@@ -353,7 +354,7 @@ Aligns with the project-level CLAUDE.md rule: "After modifying code, run `graphi
 ▢ For each Task / group:
    ▢ Mark in_progress
    ▢ Implement
-     - Sequential: Read → Edit/Write
+     - Sequential: spec task → spawn `executor` (Sonnet) → review
      - Parallel group: spawn N executors in one message
    ▢ (Parallel group only) Head re-verification across modified files
    ▢ git-master commit (Korean, scope required, no fingerprint)
