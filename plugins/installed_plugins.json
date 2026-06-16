@@ -46,7 +46,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown",
         "version": "unknown",
         "installedAt": "2026-02-06T07:39:34.590Z",
-        "lastUpdated": "2026-04-10T06:44:03.877Z",
+        "lastUpdated": "2026-06-16T01:41:47.644Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -66,7 +66,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/unknown",
         "version": "unknown",
         "installedAt": "2026-02-06T07:39:34.620Z",
-        "lastUpdated": "2026-04-10T06:44:03.878Z",
+        "lastUpdated": "2026-06-16T01:41:47.643Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -146,7 +146,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/context-mode/context-mode/1.0.140",
         "version": "1.0.140",
         "installedAt": "2026-05-14T05:22:22.529Z",
-        "lastUpdated": "2026-06-11T01:06:13.979Z",
+        "lastUpdated": "2026-06-16T00:28:06.985Z",
         "gitCommitSha": "0c838a3dea3f85010557718e38b8301d2782fc00"
       }
     ],
@@ -179,8 +179,5 @@
         "gitCommitSha": "f27ddf087644cef4b9617d13658bc3995715e05a"
       }
     ]
-  },
-  "enabledPlugins": {
-    "context-mode@context-mode": true
   }
 }
