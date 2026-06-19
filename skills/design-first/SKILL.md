@@ -7,7 +7,7 @@ description: |
 
 # Design-First Development Workflow
 
-> **Language Instruction**: All agent outputs MUST be written in **Korean (한글)**.
+> **Language Instruction**: All agent outputs MUST be written in **Korean**.
 
 ## Overview
 

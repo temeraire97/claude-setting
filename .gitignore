@@ -13,3 +13,7 @@
 *credentials*
 *.secret
 /mcp.json
+
+# never back up per-project memory (may contain client-confidential data) — repo is PUBLIC
+projects/
+*/memory/
