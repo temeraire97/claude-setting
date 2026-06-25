@@ -179,5 +179,8 @@
         "gitCommitSha": "f27ddf087644cef4b9617d13658bc3995715e05a"
       }
     ]
+  },
+  "enabledPlugins": {
+    "context-mode@context-mode": true
   }
 }
