@@ -46,7 +46,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown",
         "version": "unknown",
         "installedAt": "2026-02-06T07:39:34.590Z",
-        "lastUpdated": "2026-06-24T09:52:25.432Z",
+        "lastUpdated": "2026-06-26T06:07:49.083Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -66,7 +66,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/unknown",
         "version": "unknown",
         "installedAt": "2026-02-06T07:39:34.620Z",
-        "lastUpdated": "2026-06-24T09:52:25.439Z",
+        "lastUpdated": "2026-06-26T06:07:49.084Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -83,10 +83,10 @@
     "figma@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/2.2.60",
-        "version": "2.2.60",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/figma/2.2.68",
+        "version": "2.2.68",
         "installedAt": "2026-02-06T07:39:37.782Z",
-        "lastUpdated": "2026-06-22T23:55:53.076Z",
+        "lastUpdated": "2026-06-26T00:43:33.947Z",
         "gitCommitSha": "20aca44ee6ba6092037e943c151c067896828360"
       }
     ],
@@ -179,8 +179,5 @@
         "gitCommitSha": "f27ddf087644cef4b9617d13658bc3995715e05a"
       }
     ]
-  },
-  "enabledPlugins": {
-    "context-mode@context-mode": true
   }
 }
