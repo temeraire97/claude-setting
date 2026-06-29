@@ -46,7 +46,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown",
         "version": "unknown",
         "installedAt": "2026-02-06T07:39:34.590Z",
-        "lastUpdated": "2026-06-26T06:07:49.083Z",
+        "lastUpdated": "2026-06-29T08:17:42.193Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -66,7 +66,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/unknown",
         "version": "unknown",
         "installedAt": "2026-02-06T07:39:34.620Z",
-        "lastUpdated": "2026-06-26T06:07:49.084Z",
+        "lastUpdated": "2026-06-29T08:17:42.195Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -113,10 +113,10 @@
     "atlassian@claude-plugins-official": [
       {
         "scope": "user",
-        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/atlassian/55cfdc55afed",
-        "version": "55cfdc55afed",
+        "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/atlassian/201c1b20ef45",
+        "version": "201c1b20ef45",
         "installedAt": "2026-02-10T06:04:06.980Z",
-        "lastUpdated": "2026-06-24T01:40:22.342Z",
+        "lastUpdated": "2026-06-29T00:54:01.377Z",
         "gitCommitSha": "25068023d5078c7f1050c533da139304d8bc204d"
       }
     ],
