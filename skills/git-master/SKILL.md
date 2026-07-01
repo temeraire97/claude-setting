@@ -125,6 +125,46 @@ feature/xxx, fix/xxx, chore/xxx
 
 ---
 
+### 예외: 간단 수정은 main 직접 (Simple Fix Fast-Path)
+
+**Branch Discipline의 예외로 인정되는 수정 작업은 두 가지 경로가 있다.** 판단이 애매하면 보수적으로 브랜치를 사용한다.
+
+#### 경로 1: 자동 eligible (질문 없이 main 직행)
+
+**다음을 모두 만족하는 간단한 수정:**
+- 변경량: 약 1-2줄 이내
+- 위험도: 명백하고 저위험 (오타 수정, 한 줄 버그 수정, 빌드/설정 스크립트 경미한 tweak, 주석·문서 소소한 수정)
+- 영향: 단일 파일, 명백한 의도
+
+**동작:** 브랜치/PR 생략, `main`에서 직접 수정 → 커밋 → push
+
+#### 경로 2: 사용자 판단 (fix 타입 작업)
+
+**`fix` 타입이지만 trivial하지 않은 경우** (로직·동작 변경, 범위 불명확 등)는 사용자에게 먼저 질문:
+
+> "fix 작업입니다. `main`에서 바로 커밋할까요, 아니면 브랜치+PR로 진행할까요?"
+
+- 사용자가 **main 직행** 선택 → 브랜치 생성 없이 `main`에서 수정 → 커밋 → push (PR 생략)
+- 사용자가 **브랜치** 선택 또는 무응답 → 기존 Branch Discipline 대로 브랜치+PR
+
+#### 반드시 브랜치 사용 (예외 대상 아님)
+
+- 다중 파일 변경 (3파일 이상)
+- 로직·동작 변경 (범위 불명확한 경우)
+- 마이그레이션, 대규모 리팩토링
+- 설계 결정 필요
+- **feat/refactor 등 비-fix 작업** — 항상 Branch Discipline 준수
+- **판단 불명확 시 → 무조건 브랜치 사용 (보수적 원칙)**
+
+#### 공통 규칙
+
+- 한국어 Conventional Commits 형식: `type(scope): message`
+- scope 필수 (생략 금지)
+- AI/Claude fingerprint 절대 금지 (Co-Authored-By 등)
+- Main 직접 push는 CI/배포 파이프라인을 트리거할 수 있음 → 배포 영향이 있으면 **push 전에 사용자에게 고지** 필수
+
+---
+
 ## Testing Multiple Branches in Staging
 
 **Throw-Away Integration Branch** 패턴으로 여러 feature 브랜치를 staging에서 함께 테스트:

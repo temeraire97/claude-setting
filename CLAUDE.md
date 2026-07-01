@@ -21,6 +21,38 @@ Not optional. User verify manually. Build commands:
 - A PreToolUse hook (`block-main-impl.js`) enforces this by denying Edit/Write from the main session; if it is ever disabled, this directive still governs.
 - The ONLY exception is a literal one-keystroke fix the user explicitly orders inline ("just fix it directly"); even then prefer delegation.
 
+## Simple Fix Fast-Path (간단 수정은 main 직접)
+
+**간단한 수정은 Branch Discipline의 예외로 worktree/브랜치/PR/검증 파이프라인을 생략하고 main에 직접 commit + push한다.**
+
+이는 BRANCHING 정책의 변경이다 (누가 편집하는지가 아님). **Sonnet executor는 여전히 편집을 담당하며**, 다만 worktree 오버헤드 없이 main에 직접 배포된다.
+
+**적용 대상:**
+- 변경량: 약 1-2줄 이내
+- 위험도: 명백하고 저위험
+  - 오타 수정
+  - 한 줄 버그 수정
+  - 빌드/설정 스크립트 경미한 tweak
+  - 주석·문서 소소한 수정
+- 영향: 단일 파일, 명백한 의도
+
+**제외 (반드시 worktree→브랜치→PR→검증 사용):**
+- 다중 파일 변경 (3파일 이상)
+- 로직·동작 변경
+- 마이그레이션, 대규모 리팩토링
+- 설계 결정 필요
+- **판단 불명확 시 → 무조건 브랜치 사용 (보수적 원칙)**
+
+**커밋 규칙 (동일 유지):**
+- 편집은 Sonnet executor에 위임 (main loop는 Edit/Write 직접 금지)
+- 한국어 Conventional Commits 형식: `type(scope): message`
+- scope 필수 (생략 금지)
+- AI/Claude fingerprint 절대 금지 (Co-Authored-By 등)
+
+**배포 고지:**
+- Main 직접 push는 CI/배포를 트리거할 수 있음
+- 배포 영향이 있으면 **push 전에 사용자에게 고지** 필수
+
 ## Package Manager Rules
 
 Check `packageManager` field in `package.json` for project's package manager, then use matching command:
