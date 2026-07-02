@@ -21,6 +21,7 @@
     ],
     "defaultMode": "bypassPermissions"
   },
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -28,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"/Users/hyunoo/.local/share/fnm/node-versions/v24.15.0/installation/bin/node\" \"/Users/hyunoo/.claude/hooks/block-main-impl.js\"",
+            "command": "\"/Users/hyunoo/.local/share/fnm/aliases/default/bin/node\" \"/Users/hyunoo/.claude/hooks/block-main-impl.js\"",
             "timeout": 5,
             "statusMessage": "Enforcing orchestrator-only main loop..."
           }
@@ -48,7 +49,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"/Users/hyunoo/.local/share/fnm/node-versions/v24.15.0/installation/bin/node\" \"/Users/hyunoo/.claude/hooks/caveman-mode-tracker.js\"",
+            "command": "\"/Users/hyunoo/.local/share/fnm/aliases/default/bin/node\" \"/Users/hyunoo/.claude/hooks/caveman-mode-tracker.js\"",
             "timeout": 5,
             "statusMessage": "Tracking caveman mode..."
           }
@@ -119,7 +120,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"/Users/hyunoo/.local/share/fnm/node-versions/v24.15.0/installation/bin/node\" \"/Users/hyunoo/.claude/hooks/caveman-activate.js\"",
+            "command": "\"/Users/hyunoo/.local/share/fnm/aliases/default/bin/node\" \"/Users/hyunoo/.claude/hooks/caveman-activate.js\"",
             "timeout": 5,
             "statusMessage": "Loading caveman mode..."
           }
@@ -181,8 +182,10 @@
   "language": "Korean, 한국어",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
+  "fastMode": true,
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
+  "switchModelsOnFlag": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true
 }
