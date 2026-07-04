@@ -46,7 +46,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown",
         "version": "unknown",
         "installedAt": "2026-02-06T07:39:34.590Z",
-        "lastUpdated": "2026-07-03T09:34:15.958Z",
+        "lastUpdated": "2026-07-04T05:11:41.393Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
@@ -66,7 +66,7 @@
         "installPath": "/Users/hyunoo/.claude/plugins/cache/claude-plugins-official/playwright/unknown",
         "version": "unknown",
         "installedAt": "2026-02-06T07:39:34.620Z",
-        "lastUpdated": "2026-07-03T09:34:15.956Z",
+        "lastUpdated": "2026-07-04T05:11:41.393Z",
         "gitCommitSha": "236752ad9ab36029b648bfd94707944760242768"
       }
     ],
