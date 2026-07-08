@@ -66,25 +66,27 @@ git branch -d <branch-name>
 **CodeCommit은 `aws codecommit` CLI로 PR 생성·merge** 한다:
 - `gh` CLI 대신 `aws codecommit` CLI 사용
 - Merge는 `aws codecommit merge-pull-request-by-three-way` (CLI 3-way merge) 사용
-- CLI merge 시 머지 커밋 author는 AWS IAM 사용자(`devops`)로 남으며, 이는 repo의 기존 관행과 일치한다
+- CLI merge 시 머지 커밋 author는 AWS IAM 사용자(`$CC_IAM_USER`)로 남으며, 이는 repo의 기존 관행과 일치한다
 - 머지 커밋 author를 개인 계정으로 남기고 싶을 때만 아래 "Local Merge with Custom Author" 옵션을 선택적으로 사용
 
 ### ⚠️ CodeCommit AWS Profile (CRITICAL)
 
-**CodeCommit 관련 `aws` CLI 명령은 반드시 `--profile devgentlepie` 사용:**
+> 실제 값(`$CC_PROFILE`, `$CC_REPO`, `$CC_IAM_USER`)은 비공개 로컬 파일 `git-master.local.md`(같은 폴더, gitignore·백업 제외)에 정의되어 있다. 공개 저장소에는 변수명만 노출된다.
+
+**CodeCommit 관련 `aws` CLI 명령은 반드시 `--profile $CC_PROFILE` 사용:**
 
 ```bash
 # ✅ 올바른 사용
-aws codecommit create-pull-request --profile devgentlepie ...
-aws codecommit get-pull-request --profile devgentlepie ...
-aws codecommit merge-pull-request-by-three-way --profile devgentlepie ...
+aws codecommit create-pull-request --profile $CC_PROFILE ...
+aws codecommit get-pull-request --profile $CC_PROFILE ...
+aws codecommit merge-pull-request-by-three-way --profile $CC_PROFILE ...
 
 # ❌ 절대 금지 (다른 프로파일 사용)
-aws codecommit ... --profile lg    # 접근 불가
+aws codecommit ... --profile <other-account>    # 접근 불가
 aws codecommit ...                  # 기본 프로파일 사용 금지
 ```
 
-**이유:** CodeCommit 저장소는 `devgentlepie` 프로파일의 AWS 계정에만 존재함
+**이유:** CodeCommit 저장소는 `$CC_PROFILE` 프로파일의 AWS 계정에만 존재함
 
 **GitHub Flow 사용:**
 1. `main`은 항상 배포 가능 상태
@@ -200,7 +202,7 @@ git branch -D staging-qa
 ```bash
 # PR 생성 (CodeCommit)
 aws codecommit create-pull-request \
-  --profile devgentlepie \
+  --profile $CC_PROFILE \
   --title "feat(scope): 변경 요약" \
   --description "## Summary
 - 변경사항 1
@@ -208,21 +210,21 @@ aws codecommit create-pull-request \
 
 ## Test plan
 - [x] 테스트 통과" \
-  --targets repositoryName=editup_service,sourceReference=<branch-name>,destinationReference=main
+  --targets repositoryName=$CC_REPO,sourceReference=<branch-name>,destinationReference=main
 ```
 
 **워크플로우:**
 1. 작업 완료 후 `git push`
 2. **PR 생성** (위 명령어)
-3. PR URL 확인: `aws codecommit get-pull-request --profile devgentlepie --pull-request-id <id>`
+3. PR URL 확인: `aws codecommit get-pull-request --profile $CC_PROFILE --pull-request-id <id>`
 4. 리뷰 후 **CodeCommit 콘솔에서 merge** 또는 CLI로 merge
 
 ```bash
 # PR merge (CodeCommit)
 aws codecommit merge-pull-request-by-three-way \
-  --profile devgentlepie \
+  --profile $CC_PROFILE \
   --pull-request-id <id> \
-  --repository-name editup_service
+  --repository-name $CC_REPO
 ```
 
 **직접 merge 금지** - PR 없이 `git merge`로 main에 직접 병합하지 말 것
@@ -231,15 +233,15 @@ aws codecommit merge-pull-request-by-three-way \
 
 ## Local Merge with Custom Author (CodeCommit 선택 옵션)
 
-기본은 CLI merge다. **머지 커밋 author를 AWS IAM(`devops`)이 아닌 개인 계정으로 남기고 싶을 때만** 아래 로컬 merge를 사용한다:
+기본은 CLI merge다. **머지 커밋 author를 AWS IAM(`$CC_IAM_USER`)이 아닌 개인 계정으로 남기고 싶을 때만** 아래 로컬 merge를 사용한다:
 
 ```bash
 # 1. PR 생성 (기록용 - 위와 동일)
 aws codecommit create-pull-request \
-  --profile devgentlepie \
+  --profile $CC_PROFILE \
   --title "feat(scope): 변경 요약" \
   --description "..." \
-  --targets repositoryName=editup_service,sourceReference=<branch-name>,destinationReference=main
+  --targets repositoryName=$CC_REPO,sourceReference=<branch-name>,destinationReference=main
 
 # 2. main에서 로컬 3-way merge
 git checkout main

@@ -17,3 +17,11 @@
 # never back up per-project memory (may contain client-confidential data) — repo is PUBLIC
 projects/
 */memory/
+
+# local-only skill values — never back up
+*.local.md
+
+# plugin install caches — machine state (paths/SHAs). Restore is declarative via
+# enabledPlugins + extraKnownMarketplaces in settings.json, so these are not backed up.
+plugins/installed_plugins.json
+plugins/known_marketplaces.json

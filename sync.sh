@@ -52,8 +52,6 @@ sync_dir() {
 sync_file "$CLAUDE_DIR/CLAUDE.md" "$SCRIPT_DIR/CLAUDE.md"
 sync_file "$CLAUDE_DIR/settings.json" "$SCRIPT_DIR/settings.json"
 sync_file "$CLAUDE_DIR/statusline-wrapper.sh" "$SCRIPT_DIR/statusline-wrapper.sh"
-sync_file "$CLAUDE_DIR/plugins/installed_plugins.json" "$SCRIPT_DIR/plugins/installed_plugins.json"
-sync_file "$CLAUDE_DIR/plugins/known_marketplaces.json" "$SCRIPT_DIR/plugins/known_marketplaces.json"
 
 # Sync directories
 sync_dir "$CLAUDE_DIR/skills" "$SCRIPT_DIR/skills"

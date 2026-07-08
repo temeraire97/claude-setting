@@ -72,7 +72,7 @@ Frontend 작업 시 `~/.claude/skills/my-frontend/` 가이드라인 참고할 �
 - **graphify** (`~/.claude/skills/graphify/SKILL.md`) — any input to knowledge graph. Trigger: `/graphify`
 User types `/graphify` → invoke Skill tool with `skill: "graphify"` before anything else.
 
-## Work-style (promoted from aequitas project memory, 2026-06-08)
+## Work-style (promoted from a client project memory, 2026-06-08)
 
 - **Verify before claiming:** "best practice" / "권장 방법" 단정 전 WebSearch + 공식 가이드 1회 이상 확인; 검증 못 했으면 "일반론, 도메인 idiom은 다를 수 있음" 명시.
 - **Task-loop for big work:** Day 단위 큰 UoW는 `/task-loop` skill(Pre-flight → 새 브랜치 → TaskCreate×N → verification team 병렬 → BLOCK/WARN triage → merge); 작은 단일 변경은 직접 진행.

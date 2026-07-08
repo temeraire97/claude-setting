@@ -141,6 +141,7 @@
     "type": "command",
     "command": "bash /Users/hyunoo/.claude/statusline-wrapper.sh"
   },
+  "autoInstallEnabledPlugins": true,
   "enabledPlugins": {
     "ralph-loop@claude-plugins-official": true,
     "claude-hud@claude-hud": true,
@@ -181,7 +182,6 @@
   "language": "Korean, 한국어",
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
-  "fastMode": true,
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "switchModelsOnFlag": true,
