@@ -17,6 +17,22 @@ echo ""
 
 mkdir -p "$CLAUDE_DIR"
 
+# 0. Dependencies — gitleaks is REQUIRED for sync.sh's pre-commit secret gate.
+#    Without it the gate fail-opens (no-op) and this PUBLIC repo loses secret scanning.
+echo "[0/5] Dependencies..."
+if command -v gitleaks >/dev/null 2>&1; then
+    echo "  ✓ gitleaks ($(gitleaks version 2>/dev/null))"
+elif command -v brew >/dev/null 2>&1; then
+    echo "  gitleaks 미설치 — brew로 설치 중..."
+    if brew install gitleaks >/dev/null 2>&1; then
+        echo "  ✓ gitleaks 설치됨"
+    else
+        echo "  ✗ gitleaks 설치 실패 — 수동: brew install gitleaks (없으면 sync 시크릿 게이트 비활성)"
+    fi
+else
+    echo "  ⚠ gitleaks·brew 둘 다 없음 — 시크릿 게이트 비활성. 설치: https://github.com/gitleaks/gitleaks"
+fi
+
 # Symlink a file into place, backing up any existing real file first.
 link_file() {
     local src="$1"
@@ -100,17 +116,16 @@ if ! command -v claude >/dev/null 2>&1; then
     echo "  Claude Code 설치 후 install.sh를 다시 실행하세요."
 else
     mkdir -p "$CLAUDE_DIR/plugins"
-    MARKET_FILE="$SCRIPT_DIR/plugins/known_marketplaces.json"
-    PLUGIN_FILE="$SCRIPT_DIR/plugins/installed_plugins.json"
+    SETTINGS_FILE="$SCRIPT_DIR/settings.json"
 
-    # 3. Register marketplaces (must precede plugin installation)
+    # 3. Register custom marketplaces from settings.json > extraKnownMarketplaces
     echo "[3/5] Marketplaces..."
-    if [ -f "$MARKET_FILE" ]; then
-        markets=$(json_extract "$MARKET_FILE" \
-            '.[].source.repo' \
-            'import json,sys; d=json.load(open(sys.argv[1])); [print(r) for v in d.values() if (r:=v.get("source",{}).get("repo"))]' || true)
+    if [ -f "$SETTINGS_FILE" ]; then
+        markets=$(json_extract "$SETTINGS_FILE" \
+            '.extraKnownMarketplaces // {} | .[].source.repo' \
+            'import json,sys; d=json.load(open(sys.argv[1])); [print(r) for v in d.get("extraKnownMarketplaces",{}).values() if (r:=v.get("source",{}).get("repo"))]' || true)
         if [ -z "$markets" ]; then
-            echo "  ✗ 파싱 실패 (jq/python3 없음 또는 형식 변경) — 수동 등록 필요"
+            echo "  (extraKnownMarketplaces 없음 — 기본 마켓만 사용)"
         else
             while IFS= read -r repo; do
                 [ -n "$repo" ] || continue
@@ -122,17 +137,17 @@ else
             done <<< "$markets"
         fi
     else
-        echo "  skip (known_marketplaces.json 백업본 없음)"
+        echo "  skip (settings.json 없음)"
     fi
 
-    # 4. Install plugins
+    # 4. Install enabled plugins from settings.json > enabledPlugins (value == true)
     echo "[4/5] Plugins..."
-    if [ -f "$PLUGIN_FILE" ]; then
-        plugins=$(json_extract "$PLUGIN_FILE" \
-            '.plugins | keys[]' \
-            'import json,sys; d=json.load(open(sys.argv[1])); [print(k) for k in d.get("plugins",{})]' || true)
+    if [ -f "$SETTINGS_FILE" ]; then
+        plugins=$(json_extract "$SETTINGS_FILE" \
+            '.enabledPlugins // {} | to_entries[] | select(.value == true) | .key' \
+            'import json,sys; d=json.load(open(sys.argv[1])); [print(k) for k,v in d.get("enabledPlugins",{}).items() if v is True]' || true)
         if [ -z "$plugins" ]; then
-            echo "  ✗ 파싱 실패 (jq/python3 없음 또는 형식 변경) — 수동 설치 필요"
+            echo "  (enabledPlugins 없음)"
         else
             ok=0
             fail=0
@@ -150,7 +165,7 @@ else
             echo "  설치 결과: 성공 $ok / 실패 $fail"
         fi
     else
-        echo "  skip (installed_plugins.json 백업본 없음)"
+        echo "  skip (settings.json 없음)"
     fi
 fi
 
