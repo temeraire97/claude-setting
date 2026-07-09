@@ -141,7 +141,6 @@
     "type": "command",
     "command": "bash /Users/hyunoo/.claude/statusline-wrapper.sh"
   },
-  "autoInstallEnabledPlugins": true,
   "enabledPlugins": {
     "ralph-loop@claude-plugins-official": true,
     "claude-hud@claude-hud": true,
@@ -186,5 +185,7 @@
   "skipDangerousModePermissionPrompt": true,
   "switchModelsOnFlag": true,
   "agentPushNotifEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "autoInstallEnabledPlugins": true,
+  "model": "claude-fable-5[1m]"
 }
