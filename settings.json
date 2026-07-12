@@ -186,6 +186,5 @@
   "switchModelsOnFlag": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "autoInstallEnabledPlugins": true,
-  "model": "claude-fable-5[1m]"
+  "autoInstallEnabledPlugins": true
 }
