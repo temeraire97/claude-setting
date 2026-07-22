@@ -21,7 +21,6 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "model": "claude-fable-5[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -187,5 +186,6 @@
   "switchModelsOnFlag": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "autoInstallEnabledPlugins": true
+  "autoInstallEnabledPlugins": true,
+  "model": "claude-fable-5[1m]"
 }
